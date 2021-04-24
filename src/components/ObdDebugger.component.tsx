@@ -32,24 +32,49 @@ function ObdDebuggerComponent(props: {
     [pid: string]: IObdResponse;
   }>({});
 
+  const getObdObject = () => obdDataObject;
+
   useEffect(() => {
     if (!connected) {
       return;
     }
 
     const subscription = device.onDataReceived(data => {
+      // console.log(data.data);
+
+      if (data.data.startsWith('>') || data.data === '\r') {
+        return;
+      }
+
       const parsedObdData = parseOBDCommand(data.data);
+      const currentObject = getObdObject();
       setObdDataObject({
-        ...obdDataObject,
+        ...currentObject,
         [parsedObdData.pid || '222']: parsedObdData,
       });
     });
 
-    setInterval(() => {
-      device.write('0105\r');
+    const interval = setInterval(() => {
+      const currentObject = getObdObject();
+      console.log(currentObject);
+
+      device
+        .write('010B\r')
+        .then(() => {
+          setTimeout(() => {
+            device.write('0105\r');
+          }, 100);
+        })
+        .then(() => {
+          setTimeout(() => {
+            device.write('010F\r');
+          }, 200);
+        })
+        .catch(console.error);
     }, 1000);
 
     return () => {
+      clearInterval(interval);
       subscription.remove();
     };
   }, [connected]);
@@ -98,10 +123,10 @@ function ObdDebuggerComponent(props: {
       </View>
       <FlatList
         data={Object.values(obdDataObject)}
-        keyExtractor={devices => devices.pid || ''}
+        keyExtractor={item => item.pid || ''}
         renderItem={({item}) => (
-          <View key={item.pid}>
-            <Text>{`${item.name}: ${item.value}${item.unit}`}</Text>
+          <View>
+            <Text>{`${item.pid}: ${item.value}${item.unit}`}</Text>
           </View>
         )}
       />
