@@ -1,6 +1,10 @@
-import {PermissionsAndroid} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
 
 export async function requestAccessFineLocationPermission() {
+  if (Platform.OS === 'ios') {
+    return true;
+  }
+
   const granted = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     {
