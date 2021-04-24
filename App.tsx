@@ -71,10 +71,18 @@ const App = () => {
       const http_server_middleware = services.http_server_middleware;
       if (http_server_middleware && http_server_middleware.host) {
         console.log(JSON.stringify(services, null, 4));
+
         fetch(
-          `http://${http_server_middleware.host}:${http_server_middleware.port}`,
+          `http://${http_server_middleware.host}:${http_server_middleware.port}/obd/save-data`,
           {
-            method: 'GET',
+            method: 'POST',
+            body: JSON.stringify({
+              '05': {hello: 'world'},
+            }),
+            // headers,
+            headers: {
+              'content-type': 'application/json',
+            },
           },
         ).catch(console.error);
       }

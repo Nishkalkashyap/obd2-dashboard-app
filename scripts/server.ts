@@ -1,12 +1,28 @@
 import service from 'bonjour';
 import express from 'express';
+import bodyParser from 'body-parser';
+import {IObdResponse} from '../src/obd/obdTypes';
 
 const bonjour = service();
 const app = express();
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({}));
+
+let globalObdState: {[pid: string]: IObdResponse} = {};
+
+app.post('/obd/save-data', (req, res) => {
+  const body: {[pid: string]: IObdResponse} = req.body;
+  globalObdState = {...globalObdState, ...body};
+  console.log(globalObdState, body);
+  res.sendStatus(200);
+});
+
+app.get('/obd/get-data', (req, res) => {
+  res.send(JSON.stringify(globalObdState));
+});
 
 app.use((req, res) => {
-  console.log(`Received request: ${req.ip}`);
-  res.sendStatus(200);
+  res.sendStatus(400);
 });
 
 app.listen(3000, () => {
