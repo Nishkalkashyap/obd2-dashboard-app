@@ -22,8 +22,11 @@ const styles = StyleSheet.create({
   },
 });
 
-function ObdDebuggerComponent(props: {device: BluetoothDevice}) {
-  const {device} = props;
+function ObdDebuggerComponent(props: {
+  device: BluetoothDevice;
+  dismissModalHandle: Function;
+}) {
+  const {device, dismissModalHandle} = props;
   const [connected, setConnected] = useState(false);
   const [obdDataObject, setObdDataObject] = useState<{
     [pid: string]: IObdResponse;
@@ -84,7 +87,15 @@ function ObdDebuggerComponent(props: {device: BluetoothDevice}) {
 
   return (
     <SafeAreaView>
-      <Text style={styles.navbar}>{device.name}</Text>
+      <View style={styles.navbar}>
+        <Text>{device.name}</Text>
+        <Text
+          onPress={() => {
+            dismissModalHandle();
+          }}>
+          Dismiss
+        </Text>
+      </View>
       <FlatList
         data={Object.values(obdDataObject)}
         keyExtractor={devices => devices.pid || ''}

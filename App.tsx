@@ -10,8 +10,10 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
+  Modal,
 } from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
+import ObdDebuggerComponent from './src/components/ObdDebugger.component';
 import {btUtil} from './util';
 
 // import btClassic from 'react-native-bluetooth-classic';
@@ -53,6 +55,10 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [refreshing, setRefreshing] = useState(true);
   const [btDevices, setBtDevices] = useState<BluetoothDevice[]>([]);
+  const [
+    currentBtDevice,
+    setCurrentBtDevice,
+  ] = useState<BluetoothDevice | null>(null);
 
   useEffect(() => {
     if (refreshing === false) {
@@ -131,6 +137,16 @@ const App = () => {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Text style={styles.navbar}>OBD II</Text>
       {refreshing && <Text style={styles.refreshingText}>Refreshing</Text>}
+      <Modal animationType="slide" visible={!!currentBtDevice}>
+        {currentBtDevice && (
+          <ObdDebuggerComponent
+            device={currentBtDevice}
+            dismissModalHandle={() => {
+              setCurrentBtDevice(null);
+            }}
+          />
+        )}
+      </Modal>
       <FlatList
         refreshControl={
           <RefreshControl
@@ -153,6 +169,9 @@ const App = () => {
                   {
                     text: 'Yes',
                     style: 'default',
+                    onPress: () => {
+                      setCurrentBtDevice(item);
+                    },
                   },
                   {
                     text: 'Cancel',
