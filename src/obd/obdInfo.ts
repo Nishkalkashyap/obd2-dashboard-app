@@ -1,4 +1,7 @@
 /* eslint-disable no-bitwise */
+
+import {IObdPID, Modes} from './obdTypes';
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 function checkHex(n: string) {
   return /^[0-9A-Fa-f]{1,64}$/.test(n);
@@ -294,11 +297,11 @@ function convertVIN(byte: string) {
   return vin;
 }
 
-var responsePIDS;
-var modeRealTime = '01';
-var modeRequestDTC = '03';
-var modeClearDTC = '04';
-var modeVin = '09';
+var responsePIDS: IObdPID[];
+var modeRealTime: Modes = Modes['01'];
+var modeRequestDTC: Modes = Modes['03'];
+var modeClearDTC: Modes = Modes['04'];
+var modeVin: Modes = Modes['09'];
 
 responsePIDS = [
   //Realtime data
@@ -1463,48 +1466,48 @@ responsePIDS = [
   },
 
   //DTC's
-  {
-    mode: modeRequestDTC,
-    pid: undefined,
-    bytes: 6,
-    name: 'requestdtc',
-    description: 'Requested DTC',
-    convertToUseful: convertDTCRequest,
-  }, //n*6 --> For each code, 6 bytes.
-  {
-    mode: modeClearDTC,
-    pid: undefined,
-    bytes: 0,
-    name: 'cleardtc',
-    description: 'Clear Trouble Codes (Clear engine light)',
-    convertToUseful: notSupported,
-  },
+  //   {
+  //     mode: modeRequestDTC,
+  //     pid: undefined,
+  //     bytes: 6,
+  //     name: 'requestdtc',
+  //     description: 'Requested DTC',
+  //     convertToUseful: convertDTCRequest,
+  //   }, //n*6 --> For each code, 6 bytes.
+  //   {
+  //     mode: modeClearDTC,
+  //     pid: undefined,
+  //     bytes: 0,
+  //     name: 'cleardtc',
+  //     description: 'Clear Trouble Codes (Clear engine light)',
+  //     convertToUseful: notSupported,
+  //   },
 
   //VIN
-  {
-    mode: modeVin,
-    pid: '00',
-    bytes: 4,
-    name: 'vinsupp0',
-    description: 'Vehicle Identification Number',
-    convertToUseful: bitDecoder,
-  },
-  {
-    mode: modeVin,
-    pid: '01',
-    bytes: 1,
-    name: 'vin_mscout',
-    description: 'VIN message count',
-    convertToUseful: convertVIN_count,
-  },
-  {
-    mode: modeVin,
-    pid: '02',
-    bytes: 1,
-    name: 'vin',
-    description: 'Vehicle Identification Number',
-    convertToUseful: convertVIN,
-  },
+  //   {
+  //     mode: modeVin,
+  //     pid: '00',
+  //     bytes: 4,
+  //     name: 'vinsupp0',
+  //     description: 'Vehicle Identification Number',
+  //     convertToUseful: bitDecoder,
+  //   },
+  //   {
+  //     mode: modeVin,
+  //     pid: '01',
+  //     bytes: 1,
+  //     name: 'vin_mscout',
+  //     description: 'VIN message count',
+  //     convertToUseful: convertVIN_count,
+  //   },
+  //   {
+  //     mode: modeVin,
+  //     pid: '02',
+  //     bytes: 1,
+  //     name: 'vin',
+  //     description: 'Vehicle Identification Number',
+  //     convertToUseful: convertVIN,
+  //   },
 ];
 
 // var exports = (module.exports = responsePIDS);
