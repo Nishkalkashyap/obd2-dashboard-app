@@ -8,6 +8,8 @@ import {
   StyleSheet,
   View,
   FlatList,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import {btUtil} from './util';
@@ -142,10 +144,28 @@ const App = () => {
         data={btDevices}
         keyExtractor={devices => devices.address}
         renderItem={({item}) => (
-          <View key={item.address} style={styles.listItem}>
-            <Text>{item.name}</Text>
-            <Text>{item.address}</Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert(
+                'Stop',
+                'Are you sure you want to connect to device?',
+                [
+                  {
+                    text: 'Yes',
+                    style: 'default',
+                  },
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ],
+              );
+            }}>
+            <View key={item.address} style={styles.listItem}>
+              <Text>{`Name: ${item.name}`}</Text>
+              <Text>{`Address: ${item.address}`}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     </SafeAreaView>
