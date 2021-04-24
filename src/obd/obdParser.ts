@@ -2,9 +2,10 @@ import PIDS from './obdInfo';
 import {IObdResponse, Modes} from './obdTypes';
 
 export function parseOBDCommand(hexString: string) {
-  var reply: IObdResponse, byteNumber, valueArray; //New object
+  var reply: IObdResponse = {},
+    byteNumber,
+    valueArray; //New object
 
-  reply = {};
   if (
     hexString === 'NO DATA' ||
     hexString === 'OK' ||
@@ -30,7 +31,10 @@ export function parseOBDCommand(hexString: string) {
     for (var i = 0; i < PIDS.length; i++) {
       if (PIDS[i].pid === reply.pid) {
         var numberOfBytes = PIDS[i].bytes;
+
         reply.name = PIDS[i].name;
+        reply.unit = PIDS[i].unit;
+
         const convertToUseful = PIDS[i].convertToUseful;
         if (!convertToUseful) {
           break;
@@ -77,6 +81,8 @@ export function parseOBDCommand(hexString: string) {
         }
 
         reply.name = PIDS[i].name;
+        reply.unit = PIDS[i].unit;
+
         reply.value = convertToUseful(
           valueArray[1],
           valueArray[2],

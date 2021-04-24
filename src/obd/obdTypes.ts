@@ -17,9 +17,7 @@ export enum Modes {
   '09' = '09',
 }
 
-export interface IObdResponse {
+export interface IObdResponse
+  extends Partial<Pick<IObdPID, 'mode' | 'pid' | 'name' | 'unit'>> {
   value?: string;
-  mode?: Modes;
-  pid?: string;
-  name?: string;
 }
