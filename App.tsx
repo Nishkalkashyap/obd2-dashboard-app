@@ -16,6 +16,9 @@ import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import ObdDebuggerComponent from './src/components/ObdDebugger.component';
 import {btUtil} from './util';
 
+import Zeroconf from 'react-native-zeroconf';
+const zeroconf = new Zeroconf();
+
 // import btClassic from 'react-native-bluetooth-classic';
 // import {requestAccessFineLocationPermission} from './util';
 
@@ -59,6 +62,24 @@ const App = () => {
     currentBtDevice,
     setCurrentBtDevice,
   ] = useState<BluetoothDevice | null>(null);
+
+  useEffect(() => {
+    zeroconf.scan('http', 'tcp');
+
+    zeroconf.on('update', () => {
+      const services = zeroconf.getServices();
+      const http_server_middleware = services.http_server_middleware;
+      if (http_server_middleware && http_server_middleware.host) {
+        console.log(JSON.stringify(services, null, 4));
+        fetch(
+          `http://${http_server_middleware.host}:${http_server_middleware.port}`,
+          {
+            method: 'GET',
+          },
+        ).catch(console.error);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (refreshing === false) {
