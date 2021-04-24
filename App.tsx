@@ -19,7 +19,31 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    backgroundColor: '#aaaaaa',
+    backgroundColor: '#ffffff',
+  },
+  navbar: {
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    backgroundColor: 'dodgerblue',
+    fontSize: 18,
+    color: '#ffffff',
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  refreshingText: {
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  listItem: {
+    display: 'flex',
+    marginVertical: 5,
+    marginHorizontal: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    fontSize: 14,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'black',
   },
 });
 
@@ -103,6 +127,8 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Text style={styles.navbar}>OBD II</Text>
+      {refreshing && <Text style={styles.refreshingText}>Refreshing</Text>}
       <FlatList
         refreshControl={
           <RefreshControl
@@ -116,7 +142,7 @@ const App = () => {
         data={btDevices}
         keyExtractor={devices => devices.address}
         renderItem={({item}) => (
-          <View key={item.address}>
+          <View key={item.address} style={styles.listItem}>
             <Text>{item.name}</Text>
             <Text>{item.address}</Text>
           </View>

@@ -1,4 +1,27 @@
 import {PermissionsAndroid, Platform} from 'react-native';
+import btClassic, {BluetoothDevice} from 'react-native-bluetooth-classic';
+
+export const btUtil = {
+  getBluetoothDevices: async () => {
+    /**
+     * Request for permission
+     */
+    const granted = await requestAccessFineLocationPermission();
+    if (!granted) {
+      throw Error('Bluetooth permission rejected');
+    }
+
+    /**
+     * Start OBD discovery
+     */
+    const devices = await btClassic.startDiscovery();
+    return devices;
+  },
+  connectToDevice: async (device: BluetoothDevice) => {
+    const connected = await device.connect({delimiter: '\r'});
+    return connected;
+  },
+};
 
 export async function requestAccessFineLocationPermission() {
   if (Platform.OS === 'ios') {
