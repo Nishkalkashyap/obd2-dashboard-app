@@ -1,6 +1,7 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../../util';
+import {PIDS} from '../../obd/obdInfo';
 import {hooks} from '../../utils/hooks';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
@@ -103,10 +104,35 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
   const {width, height} = props;
 
   const maxRpm = 6000;
-  const currentRpm = 5900;
 
   const listener = hooks.useDataListener();
-  console.log(listener);
+  const data = {
+    ect: listener[PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR],
+    rpm: listener[PIDS.ENGINE_RPM],
+    engineRuntime: listener[PIDS.ENGINE_RUNTIME], //pending
+    fuelPressure: listener[PIDS.FUEL_PRESSURE_SENSOR],
+    intakeAirTemperature: listener[PIDS.INTAKE_AIR_TEMPERATURE_SENSOR],
+    map: listener[PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR],
+    tps: listener[PIDS.THROTTLE_POSITION_SENSOR],
+    vss: listener[PIDS.VEHICLE_SPEED_SENSOR], //pending
+    sparkAdvance: listener[PIDS.SPARK_ADVANCE],
+  };
+
+  const currentRpm = Number(data.rpm?.value) || 0;
+  const sensorsList = [
+    data.ect,
+    data.fuelPressure,
+    data.intakeAirTemperature,
+    data.map,
+    data.vss,
+    data.sparkAdvance,
+  ]
+    .filter(item => item?.pid && item.name && item.value)
+    .map(item => ({
+      caption: item?.name || '',
+      value: item?.value || '',
+      units: item?.unit || '',
+    }));
 
   return (
     <View style={{...styles.container, width, height}}>
@@ -129,11 +155,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
       </View>
       <SensorsListComponent
         style={styles.sensorsListContainer}
-        list={[
-          {caption: 'water temp1', value: '23', units: 'celsius'},
-          {caption: 'water temp2', value: '23', units: 'celsius'},
-          {caption: 'water temp3', value: '23', units: 'celsius'},
-        ]}
+        list={sensorsList}
       />
       {/* <Text style={styles.speedDisplay}>Speed</Text> */}
     </View>

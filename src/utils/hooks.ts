@@ -24,9 +24,11 @@ const useHostName = () => {
 };
 
 const useDataListener = () => {
-  const statelessAggregatedData = useRef<{[pid: string]: IObdResponse}>({});
+  const statelessAggregatedData = useRef<{[pid: string]: IObdResponse | null}>(
+    {},
+  );
   const [aggregatedData, setAggregatedData] = useState<{
-    [pid: string]: IObdResponse;
+    [pid: string]: IObdResponse | null;
   }>({});
 
   useEffect(() => {
