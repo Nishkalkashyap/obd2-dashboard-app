@@ -33,9 +33,11 @@ function ObdDebuggerComponent(props: {
 
   const aggregateOBDData = useRef<{[pid: string]: IObdResponse}>({});
   const hostname = hooks.useHostName();
+  const [renderValues, setRenderValues] = useState<IObdResponse[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setRenderValues(Object.values(aggregateOBDData.current));
       if (hostname) {
         fetch(`http://${hostname}/obd/save-data`, {
           method: 'POST',
@@ -43,7 +45,11 @@ function ObdDebuggerComponent(props: {
           headers: {
             'content-type': 'application/json',
           },
-        }).catch(console.error);
+        })
+          .then(response => {
+            console.log(response.status);
+          })
+          .catch(console.error);
       }
     }, 1000);
 
@@ -72,10 +78,10 @@ function ObdDebuggerComponent(props: {
     const interval = setInterval(() => {
       const {
         ENGINE_COOLANT_TEMPERATURE_SENSOR,
-        ENGINE_RPM,
+        // ENGINE_RPM,
         // ENGINE_RUNTIME,
         // FUEL_PRESSURE_SENSOR,
-        INTAKE_AIR_TEMPERATURE_SENSOR,
+        // INTAKE_AIR_TEMPERATURE_SENSOR,
         // INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
         // MASS_AIR_FLOW_SENSOR,
         THROTTLE_POSITION_SENSOR,
@@ -86,10 +92,10 @@ function ObdDebuggerComponent(props: {
       writePIDsToDevice(
         [
           ENGINE_COOLANT_TEMPERATURE_SENSOR,
-          ENGINE_RPM,
+          // ENGINE_RPM,
           // ENGINE_RUNTIME,
           // FUEL_PRESSURE_SENSOR,
-          INTAKE_AIR_TEMPERATURE_SENSOR,
+          // INTAKE_AIR_TEMPERATURE_SENSOR,
           // INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
           // MASS_AIR_FLOW_SENSOR,
           THROTTLE_POSITION_SENSOR,
@@ -156,7 +162,7 @@ function ObdDebuggerComponent(props: {
         </Text>
       </View>
       <FlatList
-        data={Object.values(aggregateOBDData)}
+        data={renderValues}
         keyExtractor={item => item.pid || ''}
         renderItem={({item}) => (
           <View>
