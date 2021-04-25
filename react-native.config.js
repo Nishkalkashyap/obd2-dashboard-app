@@ -6,5 +6,10 @@ module.exports = {
         ios: null, // disable Android platform, other platforms will still autolink if provided
       },
     },
+    'react-native-http-bridge': {
+      platforms: {
+        android: null, // disable Android platform, other platforms will still autolink if provided
+      },
+    },
   },
 };
