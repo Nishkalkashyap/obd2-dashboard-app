@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
-import {colors} from '../../util';
+import {colors, writePIDsToDevice} from '../../util';
+import {PIDS} from '../obd/obdInfo';
 import {parseOBDCommand} from '../obd/obdParser';
 import {IObdResponse} from '../obd/obdTypes';
 import {hooks} from '../utils/hooks';
@@ -69,19 +70,34 @@ function ObdDebuggerComponent(props: {
     });
 
     const interval = setInterval(() => {
-      device
-        .write('010B\r')
-        .then(() => {
-          setTimeout(() => {
-            device.write('0105\r');
-          }, 100);
-        })
-        .then(() => {
-          setTimeout(() => {
-            device.write('010F\r');
-          }, 200);
-        })
-        .catch(console.error);
+      const {
+        ENGINE_COOLANT_TEMPERATURE_SENSOR,
+        ENGINE_RPM,
+        ENGINE_RUNTIME,
+        FUEL_PRESSURE_SENSOR,
+        INTAKE_AIR_TEMPERATURE_SENSOR,
+        INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
+        // MASS_AIR_FLOW_SENSOR,
+        THROTTLE_POSITION_SENSOR,
+        VEHICLE_SPEED_SENSOR,
+        // SPARK_ADVANCE,
+      } = PIDS;
+
+      writePIDsToDevice(
+        [
+          ENGINE_COOLANT_TEMPERATURE_SENSOR,
+          ENGINE_RPM,
+          ENGINE_RUNTIME,
+          FUEL_PRESSURE_SENSOR,
+          INTAKE_AIR_TEMPERATURE_SENSOR,
+          INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
+          // MASS_AIR_FLOW_SENSOR,
+          THROTTLE_POSITION_SENSOR,
+          VEHICLE_SPEED_SENSOR,
+          // SPARK_ADVANCE,
+        ],
+        device,
+      ).catch(console.error);
     }, 1000);
 
     return () => {

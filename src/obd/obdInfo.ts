@@ -298,13 +298,13 @@ function convertVIN(byte: string) {
 }
 
 export const PIDS = {
-  ENGINE_COOLANT_TEMPRATURE_SENSOR: '05',
+  ENGINE_COOLANT_TEMPERATURE_SENSOR: '05',
   FUEL_PRESSURE_SENSOR: '0A',
   INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR: '0B',
   ENGINE_RPM: '0C',
   VEHICLE_SPEED_SENSOR: '0D',
   SPARK_ADVANCE: '0E',
-  INTAKE_AIR_TEMPRATURE_SENSOR: '0F',
+  INTAKE_AIR_TEMPERATURE_SENSOR: '0F',
   MASS_AIR_FLOW_SENSOR: '10',
   THROTTLE_POSITION_SENSOR: '11',
   ENGINE_RUNTIME: '1F',
@@ -375,7 +375,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: PIDS.ENGINE_COOLANT_TEMPRATURE_SENSOR,
+    pid: PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR,
     bytes: 1,
     name: 'temp',
     description: 'Engine Coolant Temperature',
@@ -485,7 +485,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: PIDS.INTAKE_AIR_TEMPRATURE_SENSOR,
+    pid: PIDS.INTAKE_AIR_TEMPERATURE_SENSOR,
     bytes: 1,
     name: 'iat',
     description: 'Intake Air Temperature',

@@ -93,3 +93,17 @@ export const colors = {
     tint: '#f5f6f9',
   },
 };
+
+export const writePIDsToDevice = (pids: string[], device: BluetoothDevice) => {
+  const promises = pids.reduce(async (a, b) => {
+    await a;
+    return await new Promise(resolve => {
+      setTimeout(() => {
+        device.write(b).finally(() => {
+          resolve();
+        });
+      }, 80);
+    });
+  }, Promise.resolve());
+  return promises;
+};

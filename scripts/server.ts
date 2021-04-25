@@ -10,6 +10,10 @@ app.use(bodyParser.json({}));
 
 let globalObdState: {[pid: string]: IObdResponse} = {};
 
+setInterval(() => {
+  console.log(globalObdState);
+}, 5000);
+
 app.post('/obd/save-data', (req, res) => {
   const body: {[pid: string]: IObdResponse} = req.body;
   globalObdState = {...globalObdState, ...body};
