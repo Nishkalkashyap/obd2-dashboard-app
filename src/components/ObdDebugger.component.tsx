@@ -4,6 +4,7 @@ import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import {colors} from '../../util';
 import {parseOBDCommand} from '../obd/obdParser';
 import {IObdResponse} from '../obd/obdTypes';
+import {hooks} from '../utils/hooks';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,17 +31,25 @@ function ObdDebuggerComponent(props: {
   const [connected, setConnected] = useState(false);
 
   const aggregateOBDData = useRef<{[pid: string]: IObdResponse}>({});
+  const hostname = hooks.useHostName();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // make post request here
-      // console.log(aggregateOBDData.current);
+      if (hostname) {
+        fetch(`http://${hostname}/obd/save-data`, {
+          method: 'POST',
+          body: JSON.stringify(aggregateOBDData.current),
+          headers: {
+            'content-type': 'application/json',
+          },
+        }).catch(console.error);
+      }
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [hostname]);
 
   /**
    * Register data subscription

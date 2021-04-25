@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import Zeroconf from 'react-native-zeroconf';
 import {IObdResponse} from '../obd/obdTypes';
 
-const useHttpClient = () => {
+const useHostName = () => {
   const [hostname, setHostname] = useState<null | string>(null);
 
   useEffect(() => {
@@ -20,17 +20,7 @@ const useHttpClient = () => {
     });
   }, []);
 
-  return {
-    postData: (data: string) => {
-      fetch(`http://${hostname}/obd/save-data`, {
-        method: 'POST',
-        body: data,
-        headers: {
-          'content-type': 'application/json',
-        },
-      }).catch(console.error);
-    },
-  };
+  return hostname;
 };
 
 const useHttpGetRequestData = () => {
@@ -86,6 +76,6 @@ const useHttpGetRequestData = () => {
 };
 
 export const hooks = {
-  useHttpClient,
+  useHostName,
   useHttpGetRequestData,
 };
