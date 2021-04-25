@@ -297,6 +297,19 @@ function convertVIN(byte: string) {
   return vin;
 }
 
+export const PIDS = {
+  ENGINE_COOLANT_TEMPRATURE_SENSOR: '05',
+  FUEL_PRESSURE_SENSOR: '0A',
+  INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR: '0B',
+  ENGINE_RPM: '0C',
+  VEHICLE_SPEED_SENSOR: '0D',
+  SPARK_ADVANCE: '0E',
+  INTAKE_AIR_TEMPRATURE_SENSOR: '0F',
+  MASS_AIR_FLOW_SENSOR: '10',
+  THROTTLE_POSITION_SENSOR: '11',
+  ENGINE_RUNTIME: '1F',
+};
+
 var responsePIDS: IObdPID[];
 var modeRealTime: Modes = Modes['01'];
 var modeRequestDTC: Modes = Modes['03'];
@@ -362,7 +375,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '05',
+    pid: PIDS.ENGINE_COOLANT_TEMPRATURE_SENSOR,
     bytes: 1,
     name: 'temp',
     description: 'Engine Coolant Temperature',
@@ -417,7 +430,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '0A',
+    pid: PIDS.FUEL_PRESSURE_SENSOR,
     bytes: 1,
     name: 'frp',
     description: 'Fuel Pressure',
@@ -428,7 +441,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '0B',
+    pid: PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
     bytes: 1,
     name: 'map',
     description: 'Intake Manifold Absolute Pressure',
@@ -439,7 +452,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '0C',
+    pid: PIDS.ENGINE_RPM,
     bytes: 2,
     name: 'rpm',
     description: 'Engine RPM',
@@ -450,7 +463,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '0D',
+    pid: PIDS.VEHICLE_SPEED_SENSOR,
     bytes: 1,
     name: 'vss',
     description: 'Vehicle Speed Sensor',
@@ -461,7 +474,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '0E',
+    pid: PIDS.SPARK_ADVANCE,
     bytes: 1,
     name: 'sparkadv',
     description: 'Ignition Timing Advance for #1 Cylinder',
@@ -472,7 +485,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '0F',
+    pid: PIDS.INTAKE_AIR_TEMPRATURE_SENSOR,
     bytes: 1,
     name: 'iat',
     description: 'Intake Air Temperature',
@@ -483,7 +496,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '10',
+    pid: PIDS.MASS_AIR_FLOW_SENSOR,
     bytes: 2,
     name: 'maf',
     description: 'Air Flow Rate from Mass Air Flow Sensor',
@@ -494,7 +507,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '11',
+    pid: PIDS.THROTTLE_POSITION_SENSOR,
     bytes: 1,
     name: 'throttlepos',
     description: 'Absolute Throttle Position',
@@ -656,7 +669,7 @@ responsePIDS = [
   },
   {
     mode: modeRealTime,
-    pid: '1F',
+    pid: PIDS.ENGINE_RUNTIME,
     bytes: 2,
     name: 'runtm',
     description: 'Time Since Engine Start',
