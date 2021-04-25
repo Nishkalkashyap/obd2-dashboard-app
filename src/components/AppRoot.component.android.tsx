@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.light.color,
   },
   navbar: {
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: colors.primaryColor,
+    backgroundColor: colors.primary.color,
     fontSize: 18,
-    color: '#ffffff',
+    color: colors.light.color,
     fontWeight: 'bold',
     marginBottom: 20,
   },

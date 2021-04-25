@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   flatListItem: {
     borderWidth: 1,
-    borderColor: colors.primaryColor,
+    borderColor: colors.primary.color,
     borderRadius: 2,
     marginHorizontal: 10,
     marginVertical: 10,
@@ -21,16 +21,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   flatListText: {
-    color: '#fff',
+    color: colors.light.color,
     fontSize: 50,
     textAlign: 'center',
   },
   flatListUnits: {
     paddingLeft: 10,
-    color: '#fff',
+    color: colors.light.color,
   },
   flatListCaption: {
-    color: colors.primaryColor,
+    color: colors.primary.color,
     fontSize: 20,
     textAlign: 'center',
   },

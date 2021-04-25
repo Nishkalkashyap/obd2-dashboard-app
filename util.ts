@@ -47,4 +47,49 @@ export const colors = {
   primaryColor: 'dodgerblue',
   secondaryColor: 'team',
   textColor: '#ffffff',
+  primary: {
+    color: '#3880ff',
+    shade: '#3171e0',
+    tint: '#4c8dff',
+  },
+  secondary: {
+    color: '#3dc2ff',
+    shade: '#36abe0',
+    tint: '#50c8ff',
+  },
+  tertiary: {
+    color: '#5260ff',
+    shade: '#4854e0',
+    tint: '#6370ff',
+  },
+  success: {
+    color: '#2dd36f',
+    shade: '#28ba62',
+    tint: '#42d77d',
+  },
+  warn: {
+    color: '#ffc409',
+    shade: '#e0ac08',
+    tint: '#ffca22',
+  },
+  danger: {
+    color: '#eb445a',
+    shade: '#cf3c4f',
+    tint: '#ed576b',
+  },
+  dark: {
+    color: '#222428',
+    shade: '#1e2023',
+    tint: '#383a3e',
+  },
+  medium: {
+    color: '#92949c',
+    shade: '#808289',
+    tint: '#9d9fa6',
+  },
+  light: {
+    color: '#f4f5f8',
+    shade: '#d7d8da',
+    tint: '#f5f6f9',
+  },
 };

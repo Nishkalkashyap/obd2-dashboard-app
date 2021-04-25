@@ -6,7 +6,7 @@ import SvgImage from '../../assets/images/rpm.svg';
 const styles = StyleSheet.create({
   container: {
     // borderWidth: 1,
-    // borderColor: colors.primaryColor,
+    // borderColor: colors.primary.color,
   },
   svgImage: {
     zIndex: 1,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
   },
   bar: {
-    backgroundColor: colors.primaryColor,
+    backgroundColor: colors.primary.color,
     borderWidth: 1,
     borderColor: '#000',
   },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 const totalNumberOfBars = 50;
 
 const getColorForBar = (index: number, rpmRatio: number) => {
-  const defaultColor = colors.primaryColor;
+  const defaultColor = colors.primary.color;
   const barRatio = index / totalNumberOfBars;
 
   if (barRatio > rpmRatio) {

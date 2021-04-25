@@ -9,11 +9,11 @@ const sharedStyles = StyleSheet.create({
   borderedContainer: {
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: colors.primaryColor,
+    borderColor: colors.primary.color,
     borderRadius: 10,
   },
   textShadow: {
-    textShadowColor: '#ffffff',
+    textShadowColor: colors.light.color,
     textShadowRadius: 10,
   },
 });
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
   rpmText: {
     textAlign: 'center',
     fontSize: 90,
-    color: '#fff',
+    color: colors.light.color,
   },
   rpmTextCaption: {
     textAlign: 'center',
     fontSize: 30,
-    color: colors.primaryColor,
+    color: colors.primary.color,
   },
   gearDisplay: {
     ...sharedStyles.borderedContainer,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     // width: '16%',
     // fontSize: 250,
     textAlign: 'center',
-    color: '#ffffff',
+    color: colors.light.color,
     zIndex: 2,
   },
   speedDisplay: {
