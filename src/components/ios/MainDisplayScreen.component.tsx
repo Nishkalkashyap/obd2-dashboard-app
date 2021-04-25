@@ -1,6 +1,7 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import RPMIndicatorComponent from './RPMIndicator.component';
+import SensorsListComponent from './SensorsList.component';
 
 const sharedStyles = StyleSheet.create({
   borderedContainer: {
@@ -22,14 +23,22 @@ const styles = StyleSheet.create({
     left: '5%',
     width: seventyPercentWidth,
   },
+  sensorsListContainer: {
+    position: 'absolute',
+    // top: '50%',
+    bottom: '0%',
+    right: '5%',
+    width: '20%',
+    // height: '50%',
+  },
   rpmTextContainer: {
     ...sharedStyles.borderedContainer,
+    position: 'absolute',
     top: '12%',
+    right: '5%',
     width: '20%',
     height: seventyPercentWidth / 4,
     borderRadius: 5,
-    position: 'absolute',
-    right: '5%',
     display: 'flex',
     justifyContent: 'center',
   },
@@ -46,12 +55,17 @@ const styles = StyleSheet.create({
   gearDisplay: {
     ...sharedStyles.borderedContainer,
     position: 'absolute',
-    top: '35%',
-    height: '30%',
-    left: '42%',
-    width: '16%',
+    top: '25%',
+    height: '40%',
+    left: '16%',
+    width: '24%',
+    fontSize: 360,
+    // top: '35%',
+    // height: '30%',
+    // left: '42%',
+    // width: '16%',
+    // fontSize: 250,
     textAlign: 'center',
-    fontSize: 250,
     color: '#ffffff',
     zIndex: 2,
   },
@@ -74,6 +88,14 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         <Text style={styles.rpmText}>2300</Text>
         <Text style={styles.rpmTextCaption}>RPM</Text>
       </View>
+      <SensorsListComponent
+        style={styles.sensorsListContainer}
+        list={[
+          {caption: 'water temp1', value: '23', units: 'celsius'},
+          {caption: 'water temp2', value: '23', units: 'celsius'},
+          {caption: 'water temp3', value: '23', units: 'celsius'},
+        ]}
+      />
       {/* <Text style={styles.speedDisplay}>Speed</Text> */}
     </View>
   );
