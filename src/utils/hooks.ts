@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Zeroconf from 'react-native-zeroconf';
 import {IObdResponse} from '../obd/obdTypes';
 
@@ -21,6 +21,52 @@ const useHostName = () => {
   }, []);
 
   return hostname;
+};
+
+const useDataListener = () => {
+  const statelessAggregatedData = useRef<{[pid: string]: IObdResponse}>({});
+  const [aggregatedData, setAggregatedData] = useState<{
+    [pid: string]: IObdResponse;
+  }>({});
+
+  useEffect(() => {
+    const httpBridge = require('react-native-http-bridge');
+    httpBridge.start(5564, 'http_server_middleware', (request: any) => {
+      if (request.type === 'GET' && request.url === '/obd/get-data') {
+        httpBridge.respond(
+          request.requestId,
+          200,
+          'application/json',
+          '{"message": "OK"}',
+        );
+      } else if (request.type === 'POST' && request.url === '/obd/save-data') {
+        statelessAggregatedData.current = {
+          ...statelessAggregatedData.current,
+          ...request.postData,
+        };
+        setAggregatedData(statelessAggregatedData.current);
+        httpBridge.respond(
+          request.requestId,
+          200,
+          'application/json',
+          '{"message": "OK"}',
+        );
+      } else {
+        httpBridge.respond(
+          request.requestId,
+          400,
+          'application/json',
+          '{"message": "Bad Request"}',
+        );
+      }
+    });
+
+    return () => {
+      httpBridge.stop();
+    };
+  }, []);
+
+  return aggregatedData;
 };
 
 const useHttpGetRequestData = () => {
@@ -77,5 +123,6 @@ const useHttpGetRequestData = () => {
 
 export const hooks = {
   useHostName,
+  useDataListener,
   useHttpGetRequestData,
 };

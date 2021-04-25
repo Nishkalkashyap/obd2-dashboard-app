@@ -105,8 +105,8 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
   const maxRpm = 6000;
   const currentRpm = 5900;
 
-  const data = hooks.useHttpGetRequestData();
-  console.log(data);
+  const listener = hooks.useDataListener();
+  console.log(listener);
 
   return (
     <View style={{...styles.container, width, height}}>
