@@ -27,31 +27,32 @@ const styles = StyleSheet.create({
   bar: {
     backgroundColor: colors.primary.color,
     borderWidth: 1,
-    borderColor: '#000',
+    // shadowOpacity: 1,
+    // shadowOffset: {width: 0, height: 0},
+    // shadowRadius: 3,
   },
 });
 
 const totalNumberOfBars = 50;
 
 const getColorForBar = (index: number, rpmRatio: number) => {
-  const defaultColor = colors.primary.color;
   const barRatio = index / totalNumberOfBars;
 
   if (barRatio > rpmRatio) {
-    return defaultColor;
+    return [colors.primary.color, colors.primary.tint];
   }
 
   if (index < 0.15 * totalNumberOfBars) {
-    return 'teal';
+    return [colors.secondary.shade, colors.secondary.tint];
   }
   if (index < 0.65 * totalNumberOfBars) {
-    return 'green';
+    return [colors.success.shade, colors.success.tint];
   }
   if (index < 0.8 * totalNumberOfBars) {
-    return 'yellow';
+    return [colors.warn.shade, colors.warn.tint];
   }
 
-  return 'blue';
+  return [colors.tertiary.shade, colors.tertiary.tint];
 };
 
 function RPMIndicatorComponent(props: {
@@ -76,7 +77,8 @@ function RPMIndicatorComponent(props: {
               ...styles.bar,
               width: individualBarWidth,
               height: height,
-              backgroundColor: getColorForBar(index, currentRpm / maxRpm),
+              backgroundColor: getColorForBar(index, currentRpm / maxRpm)[0],
+              // shadowColor: getColorForBar(index, currentRpm / maxRpm)[1],
             }}
           />
         ))}
