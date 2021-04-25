@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
@@ -29,36 +28,42 @@ function ObdDebuggerComponent(props: {
 }) {
   const {device, dismissModalHandle} = props;
   const [connected, setConnected] = useState(false);
-  const [obdDataObject, setObdDataObject] = useState<{
+
+  const [currentPIDData, setCurrentPIDData] = useState<{
+    [pid: string]: IObdResponse;
+  }>({});
+  const [aggregateOBDData, setAggregateOBDData] = useState<{
     [pid: string]: IObdResponse;
   }>({});
 
-  const getObdObject = () => obdDataObject;
+  /**
+   * Update aggregate PID data
+   */
+  useEffect(() => {
+    if (Object.keys(currentPIDData).length) {
+      setAggregateOBDData({...aggregateOBDData, ...currentPIDData});
+      setCurrentPIDData({});
+    }
+  }, [currentPIDData, aggregateOBDData]);
 
+  /**
+   * Register data subscription
+   */
   useEffect(() => {
     if (!connected) {
       return;
     }
 
     const subscription = device.onDataReceived(data => {
-      // console.log(data.data);
-
       if (data.data.startsWith('>') || data.data === '\r') {
         return;
       }
 
       const parsedObdData = parseOBDCommand(data.data);
-      const currentObject = getObdObject();
-      setObdDataObject({
-        ...currentObject,
-        [parsedObdData.pid || '222']: parsedObdData,
-      });
+      setCurrentPIDData({[parsedObdData.pid || '222']: parsedObdData});
     });
 
     const interval = setInterval(() => {
-      const currentObject = getObdObject();
-      console.log(currentObject);
-
       device
         .write('010B\r')
         .then(() => {
@@ -78,13 +83,16 @@ function ObdDebuggerComponent(props: {
       clearInterval(interval);
       subscription.remove();
     };
-  }, [connected]);
+  }, [device, connected]);
 
+  /**
+   * Connect to device
+   */
   useEffect(() => {
     const init = async (): Promise<{dispose: Function}> => {
       const connectionStatus = await device.connect({delimiter: '\r'});
       setConnected(connectionStatus);
-      if (connected) {
+      if (connectionStatus) {
         return {
           dispose: () => {
             device.disconnect();
@@ -109,7 +117,7 @@ function ObdDebuggerComponent(props: {
         disposable();
       }
     };
-  }, []);
+  }, [device]);
 
   return (
     <SafeAreaView>
@@ -123,7 +131,7 @@ function ObdDebuggerComponent(props: {
         </Text>
       </View>
       <FlatList
-        data={Object.values(obdDataObject)}
+        data={Object.values(aggregateOBDData)}
         keyExtractor={item => item.pid || ''}
         renderItem={({item}) => (
           <View>
