@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     position: 'absolute',
     top: '0%',
-    borderWidth: 20,
+    borderWidth: 1,
     borderColor: '#000',
   },
   barsContainer: {
@@ -42,13 +42,13 @@ const getColorForBar = (index: number, rpmRatio: number) => {
     return [colors.primary.color, colors.primary.tint];
   }
 
-  if (index < 0.15 * totalNumberOfBars) {
+  if (index < 0.1 * totalNumberOfBars) {
     return [colors.secondary.shade, colors.secondary.tint];
   }
-  if (index < 0.65 * totalNumberOfBars) {
+  if (index < 0.7 * totalNumberOfBars) {
     return [colors.success.shade, colors.success.tint];
   }
-  if (index < 0.8 * totalNumberOfBars) {
+  if (index < 0.9 * totalNumberOfBars) {
     return [colors.warn.shade, colors.warn.tint];
   }
 
