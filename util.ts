@@ -95,15 +95,28 @@ export const colors = {
 };
 
 export const writePIDsToDevice = (pids: string[], device: BluetoothDevice) => {
-  const promises = pids.reduce(async (a, b) => {
-    await a;
-    return await new Promise(resolve => {
-      setTimeout(() => {
-        device.write(b).finally(() => {
-          resolve();
-        });
-      }, 80);
+  return pids.reduce((a, b) => {
+    return a.then(() => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          device.write(`01${b}\r`).finally(() => {
+            resolve();
+          });
+        }, 100);
+      });
     });
   }, Promise.resolve());
-  return promises;
 };
+
+// const pp = (pids) => {
+//   return pids.reduce((a, b) => {
+//     return a.then(() => {
+//       return new Promise(resolve => {
+//         setTimeout(() => {
+//           console.log(b);
+//           resolve();
+//         }, 100);
+//       });
+//     });
+//   }, Promise.resolve());
+// };

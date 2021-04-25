@@ -73,13 +73,13 @@ function ObdDebuggerComponent(props: {
       const {
         ENGINE_COOLANT_TEMPERATURE_SENSOR,
         ENGINE_RPM,
-        ENGINE_RUNTIME,
-        FUEL_PRESSURE_SENSOR,
+        // ENGINE_RUNTIME,
+        // FUEL_PRESSURE_SENSOR,
         INTAKE_AIR_TEMPERATURE_SENSOR,
-        INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
+        // INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
         // MASS_AIR_FLOW_SENSOR,
         THROTTLE_POSITION_SENSOR,
-        VEHICLE_SPEED_SENSOR,
+        // VEHICLE_SPEED_SENSOR,
         // SPARK_ADVANCE,
       } = PIDS;
 
@@ -87,17 +87,21 @@ function ObdDebuggerComponent(props: {
         [
           ENGINE_COOLANT_TEMPERATURE_SENSOR,
           ENGINE_RPM,
-          ENGINE_RUNTIME,
-          FUEL_PRESSURE_SENSOR,
+          // ENGINE_RUNTIME,
+          // FUEL_PRESSURE_SENSOR,
           INTAKE_AIR_TEMPERATURE_SENSOR,
-          INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
+          // INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
           // MASS_AIR_FLOW_SENSOR,
           THROTTLE_POSITION_SENSOR,
-          VEHICLE_SPEED_SENSOR,
+          // VEHICLE_SPEED_SENSOR,
           // SPARK_ADVANCE,
         ],
         device,
-      ).catch(console.error);
+      )
+        .catch(console.error)
+        .finally(() => {
+          // console.log(`Resolved all promises`);
+        });
     }, 1000);
 
     return () => {
