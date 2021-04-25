@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import ObdDebuggerComponent from './ObdDebugger.component';
-import {btUtil} from '../../util';
+import {btUtil, colors} from '../../util';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   navbar: {
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: 'dodgerblue',
+    backgroundColor: colors.primaryColor,
     fontSize: 18,
     color: '#ffffff',
     fontWeight: 'bold',

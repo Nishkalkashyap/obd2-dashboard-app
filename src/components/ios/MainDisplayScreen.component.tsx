@@ -1,5 +1,6 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {colors} from '../../../util';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
@@ -8,8 +9,12 @@ const sharedStyles = StyleSheet.create({
   borderedContainer: {
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: 'dodgerblue',
+    borderColor: colors.primaryColor,
     borderRadius: 10,
+  },
+  textShadow: {
+    textShadowColor: '#ffffff',
+    textShadowRadius: 10,
   },
 });
 
@@ -58,10 +63,11 @@ const styles = StyleSheet.create({
   rpmTextCaption: {
     textAlign: 'center',
     fontSize: 30,
-    color: 'dodgerblue',
+    color: colors.primaryColor,
   },
   gearDisplay: {
     ...sharedStyles.borderedContainer,
+    ...sharedStyles.textShadow,
     position: 'absolute',
     top: '25%',
     height: '40%',

@@ -1,5 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, ViewStyle, Text} from 'react-native';
+import {colors} from '../../../util';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
   },
   flatListItem: {
     borderWidth: 1,
-    borderColor: 'dodgerblue',
+    borderColor: colors.primaryColor,
     borderRadius: 2,
     marginHorizontal: 10,
     marginVertical: 10,
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   flatListCaption: {
-    color: 'dodgerblue',
+    color: colors.primaryColor,
     fontSize: 20,
     textAlign: 'center',
   },

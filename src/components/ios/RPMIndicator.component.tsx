@@ -1,11 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
+import {colors} from '../../../util';
 import SvgImage from '../../assets/images/rpm.svg';
 
 const styles = StyleSheet.create({
   container: {
     // borderWidth: 1,
-    // borderColor: 'dodgerblue',
+    // borderColor: colors.primaryColor,
   },
   svgImage: {
     zIndex: 1,
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
   },
   bar: {
-    backgroundColor: 'dodgerblue',
+    backgroundColor: colors.primaryColor,
     borderWidth: 1,
     borderColor: '#000',
   },
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
 const totalNumberOfBars = 50;
 
 const getColorForBar = (index: number, rpmRatio: number) => {
-  const defaultColor = 'dodgerblue';
+  const defaultColor = colors.primaryColor;
   const barRatio = index / totalNumberOfBars;
 
   if (barRatio > rpmRatio) {

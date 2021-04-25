@@ -42,3 +42,9 @@ export async function requestAccessFineLocationPermission() {
   );
   return granted === PermissionsAndroid.RESULTS.GRANTED;
 }
+
+export const colors = {
+  primaryColor: 'dodgerblue',
+  secondaryColor: 'team',
+  textColor: '#ffffff',
+};
