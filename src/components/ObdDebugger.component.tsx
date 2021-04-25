@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import {colors} from '../../util';
@@ -29,22 +29,18 @@ function ObdDebuggerComponent(props: {
   const {device, dismissModalHandle} = props;
   const [connected, setConnected] = useState(false);
 
-  const [currentPIDData, setCurrentPIDData] = useState<{
-    [pid: string]: IObdResponse;
-  }>({});
-  const [aggregateOBDData, setAggregateOBDData] = useState<{
-    [pid: string]: IObdResponse;
-  }>({});
+  const aggregateOBDData = useRef<{[pid: string]: IObdResponse}>({});
 
-  /**
-   * Update aggregate PID data
-   */
   useEffect(() => {
-    if (Object.keys(currentPIDData).length) {
-      setAggregateOBDData({...aggregateOBDData, ...currentPIDData});
-      setCurrentPIDData({});
-    }
-  }, [currentPIDData, aggregateOBDData]);
+    const interval = setInterval(() => {
+      // make post request here
+      // console.log(aggregateOBDData.current);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   /**
    * Register data subscription
@@ -60,7 +56,7 @@ function ObdDebuggerComponent(props: {
       }
 
       const parsedObdData = parseOBDCommand(data.data);
-      setCurrentPIDData({[parsedObdData.pid || '222']: parsedObdData});
+      aggregateOBDData.current[parsedObdData.pid || '222'] = parsedObdData;
     });
 
     const interval = setInterval(() => {
