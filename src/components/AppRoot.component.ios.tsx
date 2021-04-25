@@ -1,21 +1,21 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import MainDisplayScreenComponent from './ios/MainDisplayScreen.component';
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    flex: 1,
-    backgroundColor: '#aaaaaa',
-  },
-  text: {
-    color: '#000000',
+    // display: 'flex',
+    // flex: 1,
+    // backgroundColor: '#aaaaaa',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });
 
 function IOSRoot() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Hello World</Text>
+      <MainDisplayScreenComponent width={'100%'} height={'100%'} />
     </SafeAreaView>
   );
 }
