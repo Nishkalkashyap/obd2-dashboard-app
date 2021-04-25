@@ -85,16 +85,20 @@ const styles = StyleSheet.create({
 function MainDisplayScreenComponent(props: {width: string; height: string}) {
   const {width, height} = props;
 
+  const maxRpm = 6000;
+  const currentRpm = 5900;
   return (
     <View style={{...styles.container, width, height}}>
       <ShiftLightsComponent
-        maxRpm={6000}
-        currentRpm={2000}
+        maxRpm={maxRpm}
+        currentRpm={currentRpm}
         parentStyles={styles.shiftLightsContainer}
       />
       <RPMIndicatorComponent
         width={styles.rpmDisplay.width}
         parentStyle={styles.rpmDisplay}
+        maxRpm={maxRpm}
+        currentRpm={currentRpm}
       />
       <Text style={styles.gearDisplay}>N</Text>
       <View style={styles.rpmTextContainer}>

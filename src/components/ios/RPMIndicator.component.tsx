@@ -32,11 +32,34 @@ const styles = StyleSheet.create({
 
 const totalNumberOfBars = 50;
 
+const getColorForBar = (index: number, rpmRatio: number) => {
+  const defaultColor = 'dodgerblue';
+  const barRatio = index / totalNumberOfBars;
+
+  if (barRatio > rpmRatio) {
+    return defaultColor;
+  }
+
+  if (index < 0.15 * totalNumberOfBars) {
+    return 'teal';
+  }
+  if (index < 0.65 * totalNumberOfBars) {
+    return 'green';
+  }
+  if (index < 0.8 * totalNumberOfBars) {
+    return 'yellow';
+  }
+
+  return 'blue';
+};
+
 function RPMIndicatorComponent(props: {
   width: number;
   parentStyle?: ViewStyle;
+  maxRpm: number;
+  currentRpm: number;
 }) {
-  const {width, parentStyle} = props;
+  const {width, parentStyle, maxRpm, currentRpm} = props;
   const height = width / 3;
 
   const individualBarWidth = Math.round(width / totalNumberOfBars);
@@ -52,6 +75,7 @@ function RPMIndicatorComponent(props: {
               ...styles.bar,
               width: individualBarWidth,
               height: height,
+              backgroundColor: getColorForBar(index, currentRpm / maxRpm),
             }}
           />
         ))}
