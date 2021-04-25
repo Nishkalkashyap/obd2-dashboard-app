@@ -1,5 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
+import {colors} from '../../../util';
 
 const styles = StyleSheet.create({
   listContainer: {},
@@ -8,6 +9,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginHorizontal: 10,
+    shadowColor: colors.light.color,
+    shadowOpacity: 1,
+    shadowRadius: 12,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
   },
 });
 
@@ -17,7 +25,16 @@ function ShiftLightsComponent(props: {
   parentStyles?: ViewStyle;
 }) {
   const {maxRpm, currentRpm, parentStyles} = props;
-  const list = ['green', 'green', 'red', 'red', 'red', 'blue', 'blue', 'blue'];
+  const list = [
+    [colors.success.color, colors.success.tint],
+    [colors.success.color, colors.success.tint],
+    [colors.danger.color, colors.danger.tint],
+    [colors.danger.color, colors.danger.tint],
+    [colors.danger.color, colors.danger.tint],
+    [colors.secondary.color, colors.secondary.tint],
+    [colors.secondary.color, colors.secondary.tint],
+    [colors.secondary.color, colors.secondary.tint],
+  ];
   const rpmRatio = currentRpm / maxRpm;
 
   return (
@@ -26,16 +43,20 @@ function ShiftLightsComponent(props: {
       style={{...styles.listContainer, ...parentStyles}}
       data={list}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={item => (
-        <View
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            ...styles.light,
-            backgroundColor:
-              item.index / list.length < rpmRatio ? item.item : '#ffffff22',
-          }}
-        />
-      )}
+      renderItem={item => {
+        const canHighlight = item.index / list.length < rpmRatio;
+
+        return (
+          <View
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.light,
+              backgroundColor: canHighlight ? item.item[0] : '#ffffff22',
+              shadowColor: canHighlight ? item.item[1] : '#ffffff22',
+            }}
+          />
+        );
+      }}
     />
   );
 }
