@@ -21,7 +21,7 @@ app.post('/obd/save-data', (req, res) => {
 });
 
 app.get('/obd/get-data', (req, res) => {
-  res.send(JSON.stringify(globalObdState));
+  res.json(globalObdState);
 });
 
 app.use((req, res) => {

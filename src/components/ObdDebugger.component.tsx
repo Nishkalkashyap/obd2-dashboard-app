@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
-import {colors, writePIDsToDevice} from '../../util';
+import {colors} from '../../util';
 import {PIDS} from '../obd/obdInfo';
-import {parseOBDCommand} from '../obd/obdParser';
 import {IObdResponse} from '../obd/obdTypes';
+import {OBDQueryService} from '../services/obd-query.service';
 import {hooks} from '../utils/hooks';
 
 const styles = StyleSheet.create({
@@ -24,22 +24,61 @@ const styles = StyleSheet.create({
   },
 });
 
-const pidsToRead = [
-  PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR,
-  PIDS.ENGINE_RPM,
-  PIDS.ENGINE_RUNTIME,
-  PIDS.FUEL_PRESSURE_SENSOR,
-  PIDS.INTAKE_AIR_TEMPERATURE_SENSOR,
-  PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
-  PIDS.MASS_AIR_FLOW_SENSOR,
-  PIDS.THROTTLE_POSITION_SENSOR,
-  PIDS.VEHICLE_SPEED_SENSOR,
-  PIDS.SPARK_ADVANCE,
+const pidsToReadWithDelay = [
+  {
+    PID: PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR,
+    delay: 2000,
+  },
+  {
+    PID: PIDS.ENGINE_RPM,
+    delay: 100,
+  },
+  {
+    PID: PIDS.ENGINE_RUNTIME,
+    delay: 3000,
+  },
+  {
+    PID: PIDS.FUEL_PRESSURE_SENSOR,
+    delay: 2000,
+  },
+  {
+    PID: PIDS.INTAKE_AIR_TEMPERATURE_SENSOR,
+    delay: 5000,
+  },
+  {
+    PID: PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
+    delay: 500,
+  },
+  {
+    PID: PIDS.THROTTLE_POSITION_SENSOR,
+    delay: 100,
+  },
+  {
+    PID: PIDS.VEHICLE_SPEED_SENSOR,
+    delay: 2000,
+  },
+  {
+    PID: PIDS.SPARK_ADVANCE,
+    delay: 1000,
+  },
 ];
 
-const timePerPid = 30;
-const gracePeriod = 100;
-const totalTimeRequired = pidsToRead.length * timePerPid + gracePeriod;
+// const pidsToRead = [
+//   PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR,
+//   PIDS.ENGINE_RPM,
+//   PIDS.ENGINE_RUNTIME,
+//   PIDS.FUEL_PRESSURE_SENSOR,
+//   PIDS.INTAKE_AIR_TEMPERATURE_SENSOR,
+//   PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
+//   PIDS.MASS_AIR_FLOW_SENSOR,
+//   PIDS.THROTTLE_POSITION_SENSOR,
+//   PIDS.VEHICLE_SPEED_SENSOR,
+//   PIDS.SPARK_ADVANCE,
+// ];
+
+// const timePerPid = 30;
+// const gracePeriod = 100;
+// const totalTimeRequired = pidsToRead.length * timePerPid + gracePeriod;
 
 function ObdDebuggerComponent(props: {
   device: BluetoothDevice;
@@ -83,28 +122,43 @@ function ObdDebuggerComponent(props: {
       return;
     }
 
-    const subscription = device.onDataReceived(data => {
-      if (data.data.startsWith('>') || data.data === '\r') {
-        return;
-      }
-
-      const parsedObdData = parseOBDCommand(data.data);
-      aggregateOBDData.current[parsedObdData.pid || '222'] = parsedObdData;
+    const obdQueryService = new OBDQueryService(pidsToReadWithDelay, device);
+    const subscription = obdQueryService.subscribe(data => {
+      aggregateOBDData.current[data.pid || '222'] = data;
     });
 
-    const interval = setInterval(() => {
-      writePIDsToDevice(pidsToRead, device, timePerPid)
-        .catch(console.error)
-        .finally(() => {
-          // console.log(`Resolved all promises`);
-        });
-    }, totalTimeRequired);
-
     return () => {
-      clearInterval(interval);
       subscription.remove();
     };
   }, [device, connected]);
+
+  // useEffect(() => {
+  //   if (!connected) {
+  //     return;
+  //   }
+
+  //   const subscription = device.onDataReceived(data => {
+  //     if (data.data.startsWith('>') || data.data === '\r') {
+  //       return;
+  //     }
+
+  //     const parsedObdData = parseOBDCommand(data.data);
+  //     aggregateOBDData.current[parsedObdData.pid || '222'] = parsedObdData;
+  //   });
+
+  //   const interval = setInterval(() => {
+  //     writePIDsToDevice(pidsToRead, device, timePerPid)
+  //       .catch(console.error)
+  //       .finally(() => {
+  //         // console.log(`Resolved all promises`);
+  //       });
+  //   }, totalTimeRequired);
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     subscription.remove();
+  //   };
+  // }, [device, connected]);
 
   /**
    * Connect to device

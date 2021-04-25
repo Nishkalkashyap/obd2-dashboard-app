@@ -29,7 +29,9 @@ export class OBDQueryService {
 
       const parsedObdData = parseOBDCommand(data.data);
       this._lastQueriedTimestamps[parsedObdData.pid || '222'] = Date.now();
-      fn(parsedObdData);
+      if (parsedObdData && parsedObdData.pid) {
+        fn(parsedObdData);
+      }
     });
 
     // eslint-disable-next-line consistent-this
