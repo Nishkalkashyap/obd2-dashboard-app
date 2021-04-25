@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import RPMIndicatorComponent from './RPMIndicator.component';
 
 const sharedStyles = StyleSheet.create({
@@ -11,6 +11,7 @@ const sharedStyles = StyleSheet.create({
   },
 });
 
+const seventyPercentWidth = 0.7 * Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
@@ -19,6 +20,28 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '5%',
     left: '5%',
+    width: seventyPercentWidth,
+  },
+  rpmTextContainer: {
+    ...sharedStyles.borderedContainer,
+    top: '12%',
+    width: '20%',
+    height: seventyPercentWidth / 4,
+    borderRadius: 5,
+    position: 'absolute',
+    right: '5%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  rpmText: {
+    textAlign: 'center',
+    fontSize: 90,
+    color: '#fff',
+  },
+  rpmTextCaption: {
+    textAlign: 'center',
+    fontSize: 30,
+    color: 'dodgerblue',
   },
   gearDisplay: {
     ...sharedStyles.borderedContainer,
@@ -42,8 +65,15 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
 
   return (
     <View style={{...styles.container, width, height}}>
-      <RPMIndicatorComponent width={1100} parentStyle={styles.rpmDisplay} />
+      <RPMIndicatorComponent
+        width={styles.rpmDisplay.width}
+        parentStyle={styles.rpmDisplay}
+      />
       <Text style={styles.gearDisplay}>N</Text>
+      <View style={styles.rpmTextContainer}>
+        <Text style={styles.rpmText}>2300</Text>
+        <Text style={styles.rpmTextCaption}>RPM</Text>
+      </View>
       {/* <Text style={styles.speedDisplay}>Speed</Text> */}
     </View>
   );
