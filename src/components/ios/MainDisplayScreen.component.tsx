@@ -2,6 +2,7 @@ import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
+import ShiftLightsComponent from './ShiftLights.component';
 
 const sharedStyles = StyleSheet.create({
   borderedContainer: {
@@ -16,6 +17,13 @@ const seventyPercentWidth = 0.7 * Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
+  },
+  shiftLightsContainer: {
+    position: 'absolute',
+    top: '1%',
+    left: '35%',
+    width: 500,
+    height: 300,
   },
   rpmDisplay: {
     position: 'absolute',
@@ -79,6 +87,11 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
 
   return (
     <View style={{...styles.container, width, height}}>
+      <ShiftLightsComponent
+        maxRpm={6000}
+        currentRpm={2000}
+        parentStyles={styles.shiftLightsContainer}
+      />
       <RPMIndicatorComponent
         width={styles.rpmDisplay.width}
         parentStyle={styles.rpmDisplay}
