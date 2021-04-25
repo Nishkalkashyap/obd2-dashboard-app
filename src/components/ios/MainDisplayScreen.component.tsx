@@ -4,6 +4,7 @@ import {colors} from '../../../util';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
+import TimeIndicatorComponent from './TimeIndicator.component';
 
 const sharedStyles = StyleSheet.create({
   borderedContainer: {
@@ -23,11 +24,18 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
   },
+
   shiftLightsContainer: {
     position: 'absolute',
     top: '2%',
     left: '35%',
     width: 500,
+    paddingVertical: 20,
+  },
+  timeIndicator: {
+    position: 'absolute',
+    top: '2%',
+    right: '3%',
     paddingVertical: 20,
   },
   rpmDisplay: {
@@ -98,6 +106,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         currentRpm={currentRpm}
         parentStyles={styles.shiftLightsContainer}
       />
+      <TimeIndicatorComponent parentStyles={styles.timeIndicator} />
       <RPMIndicatorComponent
         width={styles.rpmDisplay.width}
         parentStyle={styles.rpmDisplay}
