@@ -24,6 +24,23 @@ const styles = StyleSheet.create({
   },
 });
 
+const pidsToRead = [
+  PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR,
+  PIDS.ENGINE_RPM,
+  PIDS.ENGINE_RUNTIME,
+  PIDS.FUEL_PRESSURE_SENSOR,
+  PIDS.INTAKE_AIR_TEMPERATURE_SENSOR,
+  PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
+  PIDS.MASS_AIR_FLOW_SENSOR,
+  PIDS.THROTTLE_POSITION_SENSOR,
+  PIDS.VEHICLE_SPEED_SENSOR,
+  PIDS.SPARK_ADVANCE,
+];
+
+const timePerPid = 30;
+const gracePeriod = 100;
+const totalTimeRequired = pidsToRead.length * timePerPid + gracePeriod;
+
 function ObdDebuggerComponent(props: {
   device: BluetoothDevice;
   dismissModalHandle: Function;
@@ -51,7 +68,7 @@ function ObdDebuggerComponent(props: {
           })
           .catch(console.error);
       }
-    }, 1000);
+    }, 100);
 
     return () => {
       clearInterval(interval);
@@ -76,39 +93,12 @@ function ObdDebuggerComponent(props: {
     });
 
     const interval = setInterval(() => {
-      const {
-        ENGINE_COOLANT_TEMPERATURE_SENSOR,
-        // ENGINE_RPM,
-        // ENGINE_RUNTIME,
-        // FUEL_PRESSURE_SENSOR,
-        // INTAKE_AIR_TEMPERATURE_SENSOR,
-        // INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
-        // MASS_AIR_FLOW_SENSOR,
-        THROTTLE_POSITION_SENSOR,
-        // VEHICLE_SPEED_SENSOR,
-        // SPARK_ADVANCE,
-      } = PIDS;
-
-      writePIDsToDevice(
-        [
-          ENGINE_COOLANT_TEMPERATURE_SENSOR,
-          // ENGINE_RPM,
-          // ENGINE_RUNTIME,
-          // FUEL_PRESSURE_SENSOR,
-          // INTAKE_AIR_TEMPERATURE_SENSOR,
-          // INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
-          // MASS_AIR_FLOW_SENSOR,
-          THROTTLE_POSITION_SENSOR,
-          // VEHICLE_SPEED_SENSOR,
-          // SPARK_ADVANCE,
-        ],
-        device,
-      )
+      writePIDsToDevice(pidsToRead, device, timePerPid)
         .catch(console.error)
         .finally(() => {
           // console.log(`Resolved all promises`);
         });
-    }, 1000);
+    }, totalTimeRequired);
 
     return () => {
       clearInterval(interval);

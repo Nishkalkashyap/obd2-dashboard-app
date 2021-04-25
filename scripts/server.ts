@@ -17,7 +17,6 @@ setInterval(() => {
 app.post('/obd/save-data', (req, res) => {
   const body: {[pid: string]: IObdResponse} = req.body;
   globalObdState = {...globalObdState, ...body};
-  console.log(globalObdState, body);
   res.sendStatus(200);
 });
 

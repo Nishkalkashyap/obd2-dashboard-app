@@ -94,7 +94,11 @@ export const colors = {
   },
 };
 
-export const writePIDsToDevice = (pids: string[], device: BluetoothDevice) => {
+export const writePIDsToDevice = (
+  pids: string[],
+  device: BluetoothDevice,
+  delay: number,
+) => {
   return pids.reduce((a, b) => {
     return a.then(() => {
       return new Promise(resolve => {
@@ -102,7 +106,7 @@ export const writePIDsToDevice = (pids: string[], device: BluetoothDevice) => {
           device.write(`01${b}\r`).finally(() => {
             resolve();
           });
-        }, 100);
+        }, delay);
       });
     });
   }, Promise.resolve());
