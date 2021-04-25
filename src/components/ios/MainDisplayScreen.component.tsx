@@ -1,6 +1,7 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../../util';
+import {hooks} from '../../utils/hooks';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
@@ -13,6 +14,12 @@ const sharedStyles = StyleSheet.create({
     borderColor: colors.primary.color,
     borderRadius: 10,
   },
+  boxShadow: {
+    shadowColor: colors.primary.tint,
+    shadowRadius: 20,
+    shadowOffset: {height: 0, width: 0},
+    shadowOpacity: 1,
+  },
   textShadow: {
     textShadowColor: colors.light.color,
     textShadowRadius: 10,
@@ -24,7 +31,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
   },
-
   shiftLightsContainer: {
     position: 'absolute',
     top: '2%',
@@ -46,6 +52,8 @@ const styles = StyleSheet.create({
   },
   rpmTextContainer: {
     ...sharedStyles.borderedContainer,
+    // ...sharedStyles.textShadow,
+    // ...sharedStyles.boxShadow,
     position: 'absolute',
     top: '10%',
     right: '3%',
@@ -70,6 +78,8 @@ const styles = StyleSheet.create({
     bottom: '0%',
     right: '3%',
     width: '20%',
+    // ...sharedStyles.textShadow,
+    // ...sharedStyles.boxShadow,
   },
   gearDisplay: {
     ...sharedStyles.borderedContainer,
@@ -80,11 +90,6 @@ const styles = StyleSheet.create({
     left: '18%',
     width: '24%',
     fontSize: 360,
-    // top: '35%',
-    // height: '30%',
-    // left: '42%',
-    // width: '16%',
-    // fontSize: 250,
     textAlign: 'center',
     color: colors.light.color,
     zIndex: 2,
@@ -99,6 +104,10 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
 
   const maxRpm = 6000;
   const currentRpm = 5900;
+
+  const data = hooks.useHttpGetRequestData();
+  console.log(data);
+
   return (
     <View style={{...styles.container, width, height}}>
       <ShiftLightsComponent

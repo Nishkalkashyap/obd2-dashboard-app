@@ -51,5 +51,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<!-- custom -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Fetch OBD data from http middleware server</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_http._tcp</string>
+	</array>
 </dict>
 </plist>
