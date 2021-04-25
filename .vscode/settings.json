@@ -5,5 +5,8 @@
         "Nishkal",
         "Nishkal’s",
         "s"
-    ]
+    ],
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

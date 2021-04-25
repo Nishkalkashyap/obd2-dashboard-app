@@ -1,9 +1,8 @@
 import React from 'react';
-import {Platform} from 'react-native';
-import AndroidRoot from './src/components/AndroidRoot.component';
+import AppRoot from './src/components/AppRoot.component';
 
 const App = () => {
-  return <>{Platform.OS === 'android' && <AndroidRoot />}</>;
+  return <AppRoot />;
 };
 
 export default App;

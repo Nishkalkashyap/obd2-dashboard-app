@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import ObdDebuggerComponent from './ObdDebugger.component';
-import {btUtil} from './../../util';
+import {btUtil} from '../../util';
 
 const styles = StyleSheet.create({
   container: {
