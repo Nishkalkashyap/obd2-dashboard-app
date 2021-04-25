@@ -16,12 +16,6 @@ import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import ObdDebuggerComponent from './src/components/ObdDebugger.component';
 import {btUtil} from './util';
 
-import Zeroconf from 'react-native-zeroconf';
-const zeroconf = new Zeroconf();
-
-// import btClassic from 'react-native-bluetooth-classic';
-// import {requestAccessFineLocationPermission} from './util';
-
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -64,32 +58,6 @@ const App = () => {
   ] = useState<BluetoothDevice | null>(null);
 
   useEffect(() => {
-    zeroconf.scan('http', 'tcp');
-
-    zeroconf.on('update', () => {
-      const services = zeroconf.getServices();
-      const http_server_middleware = services.http_server_middleware;
-      if (http_server_middleware && http_server_middleware.host) {
-        console.log(JSON.stringify(services, null, 4));
-
-        fetch(
-          `http://${http_server_middleware.host}:${http_server_middleware.port}/obd/save-data`,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              '05': {hello: 'world'},
-            }),
-            // headers,
-            headers: {
-              'content-type': 'application/json',
-            },
-          },
-        ).catch(console.error);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     if (refreshing === false) {
       return;
     }
@@ -104,62 +72,6 @@ const App = () => {
         setRefreshing(false);
       });
   }, [refreshing]);
-
-  // useEffect(() => {
-  //   const init = async () => {
-  //     /**
-  //      * Request for permission
-  //      */
-  //     const granted = await requestAccessFineLocationPermission();
-  //     if (!granted) {
-  //       throw Error('Bluetooth permission rejected');
-  //     }
-
-  //     /**
-  //      * Start OBD discovery
-  //      */
-  //     const devices = await btClassic.startDiscovery();
-  //     const devicesMetadata = devices.map(item => ({
-  //       address: item.address,
-  //       bonded: item.bonded,
-  //       deviceClass: item.deviceClass,
-  //       extra: item.extra,
-  //       id: item.id,
-  //       name: item.name,
-  //       rssi: item.rssi,
-  //     }));
-  //     const obdDevice = devices.find(item => item.name.match(/obd/i));
-  //     if (!obdDevice) {
-  //       throw Error('OBD device not found');
-  //     }
-  //     const obdMetadata = devicesMetadata.find(item => item.name.match(/obd/i));
-  //     console.log(JSON.stringify(obdMetadata, null, 4));
-
-  //     /**
-  //      * Connect with OBD device and register listeners
-  //      */
-  //     const connected = await obdDevice.connect({delimiter: '\r'});
-  //     console.log(`OBD device connection status: ${connected}`);
-  //     obdDevice.onDataReceived(data => {
-  //       console.log(JSON.stringify(data, null, 4));
-  //     });
-
-  //     setInterval(() => {
-  //       obdDevice
-  //         .available()
-  //         .then(readResult => {
-  //           console.log(`Read result: ${readResult}`);
-  //           return obdDevice.write('0105\r');
-  //         })
-  //         .then(writeResult => {
-  //           console.log(`Write result: ${writeResult}`);
-  //         })
-  //         .catch(console.error);
-  //     }, 1000);
-  //   };
-
-  //   init().catch(console.error);
-  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>
