@@ -1,7 +1,9 @@
 import {useEffect, useRef, useState} from 'react';
 import Zeroconf from 'react-native-zeroconf';
+import {promiseWithTimeout} from '../../util';
 import {PIDS} from '../obd/obdInfo';
 import {IObdResponse} from '../obd/obdTypes';
+const httpBridge = require('react-native-http-bridge');
 
 const useHostName = () => {
   const [hostname, setHostname] = useState<null | string>(null);
@@ -35,7 +37,6 @@ const useDataListener = () => {
   }>({});
 
   useEffect(() => {
-    const httpBridge = require('react-native-http-bridge');
     httpBridge.start(5564, 'http_server_middleware', (request: any) => {
       if (request.type === 'GET' && request.url === '/obd/get-data') {
         httpBridge.respond(
@@ -147,27 +148,59 @@ const useSampleData = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (hostname) {
-        fetch(`http://${hostname}/obd/save-data`, {
-          method: 'POST',
-          body: JSON.stringify(aggregateOBDData.current),
-          headers: {
-            'content-type': 'application/json',
-          },
-        })
-          .then(_response => {
-            // console.log(response.status);
-          })
-          .catch(console.error);
+    const fetchRequest = () => {
+      if (!hostname) {
+        return Promise.reject('No hostname');
       }
-    }, 2000);
+
+      return fetch(`http://${hostname}/obd/save-data`, {
+        method: 'POST',
+        body: JSON.stringify(aggregateOBDData.current),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+    };
+
+    let canBreak = false;
+
+    Promise.resolve()
+      .then(function recursiveHandle(): Promise<any> {
+        if (canBreak) {
+          return Promise.reject('Can break');
+        }
+        return promiseWithTimeout(5000, fetchRequest()).then(recursiveHandle);
+      })
+      .catch(console.error);
 
     return () => {
-      clearInterval(interval);
+      canBreak = true;
     };
   }, [hostname]);
 };
+
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       if (hostname) {
+//         fetch(`http://${hostname}/obd/save-data`, {
+//           method: 'POST',
+//           body: JSON.stringify(aggregateOBDData.current),
+//           headers: {
+//             'content-type': 'application/json',
+//           },
+//         })
+//           .then(_response => {
+//             // console.log(response.status);
+//           })
+//           .catch(console.error);
+//       }
+//     }, 2000);
+
+//     return () => {
+//       clearInterval(interval);
+//     };
+//   }, [hostname]);
+// };
 
 export const hooks = {
   useSampleData,

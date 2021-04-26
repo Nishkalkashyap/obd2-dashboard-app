@@ -112,6 +112,24 @@ export const writePIDsToDevice = (
   }, Promise.resolve());
 };
 
+export function promiseWithTimeout(ms: number, promise: Promise<any>) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error('TIMEOUT'));
+    }, ms);
+
+    promise
+      .then((value: any) => {
+        clearTimeout(timer);
+        resolve(value);
+      })
+      .catch((reason: any) => {
+        clearTimeout(timer);
+        reject(reason);
+      });
+  });
+}
+
 // const pp = (pids) => {
 //   return pids.reduce((a, b) => {
 //     return a.then(() => {
