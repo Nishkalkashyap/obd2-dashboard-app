@@ -28,15 +28,32 @@ const styles = StyleSheet.create({
   },
   flatListUnits: {
     paddingLeft: 10,
-    color: colors.light.color,
+    // color: colors.light.color,
   },
   flatListCaption: {
-    color: colors.primary.color,
+    color: colors.light.color,
     fontSize: 20,
     textAlign: 'center',
-    fontFamily: font.regular,
+    fontFamily: font.bold,
   },
 });
+
+export const SensorItemComponent = (props: {
+  item: {caption: string; value: string; units: string};
+  style?: ViewStyle;
+}) => {
+  const {item, style} = props;
+
+  return (
+    <View style={{...styles.flatListItem, ...style}} key={item.caption}>
+      <Text style={styles.flatListText}>{item.value}</Text>
+      <Text style={styles.flatListCaption}>
+        {item.caption}
+        <Text style={styles.flatListUnits}>{`  (${item.units})`}</Text>
+      </Text>
+    </View>
+  );
+};
 
 function SensorsListComponent(props: {
   style?: ViewStyle;
@@ -51,30 +68,8 @@ function SensorsListComponent(props: {
   return (
     <View style={{...styles.container, ...style}}>
       {list.map(item => (
-        <View style={styles.flatListItem} key={item.caption}>
-          <Text style={styles.flatListText}>{item.value}</Text>
-          <Text style={styles.flatListCaption}>
-            {item.caption}
-            <Text style={styles.flatListUnits}>{`  (${item.units})`}</Text>
-          </Text>
-        </View>
+        <SensorItemComponent key={item.caption} item={item} />
       ))}
-      {/* <FlatList
-        horizontal={true}
-        style={styles.flatList}
-        keyExtractor={item => item.caption}
-        data={list}
-        renderItem={item => (
-          <View style={styles.flatListItem}>
-            <Text style={styles.flatListText}>{item.item.value}</Text>
-            <Text style={styles.flatListCaption}>
-              {item.item.caption}
-              <Text
-                style={styles.flatListUnits}>{`  (${item.item.units})`}</Text>
-            </Text>
-          </View>
-        )}
-      /> */}
     </View>
   );
 }
