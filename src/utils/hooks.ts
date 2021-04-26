@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import Zeroconf from 'react-native-zeroconf';
+import {PIDS} from '../obd/obdInfo';
 import {IObdResponse} from '../obd/obdTypes';
 
 const useHostName = () => {
@@ -101,7 +102,6 @@ const useHttpGetRequestData = () => {
       return;
     }
 
-    console.log(`http://${hostname}/obd/get-data`);
     const interval = setInterval(() => {
       fetch(`http://${hostname}/obd/get-data`, {
         method: 'GET',
@@ -123,7 +123,52 @@ const useHttpGetRequestData = () => {
   return data;
 };
 
+const useSampleData = () => {
+  const hostname = useHostName();
+  const aggregateOBDData = useRef<{[pid: string]: IObdResponse}>({});
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      aggregateOBDData.current = {
+        [PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR]: {
+          name: 'temp',
+          pid: PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR,
+          unit: 'Celsius',
+          value: Math.floor(Math.random() * 100).toString(),
+        },
+      };
+    }, 500);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (hostname) {
+        fetch(`http://${hostname}/obd/save-data`, {
+          method: 'POST',
+          body: JSON.stringify(aggregateOBDData.current),
+          headers: {
+            'content-type': 'application/json',
+          },
+        })
+          .then(_response => {
+            // console.log(response.status);
+          })
+          .catch(console.error);
+      }
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [hostname]);
+};
+
 export const hooks = {
+  useSampleData,
   useHostName,
   useDataListener,
   useHttpGetRequestData,

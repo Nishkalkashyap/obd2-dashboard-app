@@ -15,6 +15,7 @@ import {
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import ObdDebuggerComponent from './ObdDebugger.component';
 import {btUtil, colors} from '../../util';
+import {hooks} from '../utils/hooks';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +52,8 @@ const styles = StyleSheet.create({
 const AndroidRoot = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [refreshing, setRefreshing] = useState(true);
+  // hooks.useSampleData();
+
   const [btDevices, setBtDevices] = useState<BluetoothDevice[]>([]);
   const [
     currentBtDevice,

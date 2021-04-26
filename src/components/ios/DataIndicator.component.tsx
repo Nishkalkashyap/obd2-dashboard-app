@@ -17,9 +17,12 @@ function DataIndicatorComponent(props: {data: any; parentStyles: ViewStyle}) {
 
   useEffect(() => {
     setBlink(true);
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setBlink(false);
     }, 50);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [data]);
 
   return (
