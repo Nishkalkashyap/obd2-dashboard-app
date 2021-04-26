@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import {colors} from '../../../util';
+import {colors, font} from '../../../util';
 import {PIDS} from '../../obd/obdInfo';
 import {hooks} from '../../utils/hooks';
 import DataIndicatorComponent from './DataIndicator.component';
@@ -67,26 +67,27 @@ const styles = StyleSheet.create({
     right: '3%',
     width: '20%',
     height: seventyPercentWidth / 4,
-    borderRadius: 5,
+    borderRadius: 10,
     display: 'flex',
     justifyContent: 'center',
   },
   rpmText: {
     textAlign: 'center',
-    fontSize: 90,
+    fontSize: 80,
     color: colors.light.color,
+    fontFamily: font.regular,
   },
   rpmTextCaption: {
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 26,
     color: colors.primary.color,
+    fontFamily: font.regular,
   },
   sensorsListContainer: {
     position: 'absolute',
     bottom: '0%',
     left: '5%',
-    width: '90%',
-    // width: '20%',
+    width: '75%',
     // ...sharedStyles.textShadow,
     // ...sharedStyles.boxShadow,
   },
@@ -95,13 +96,12 @@ const styles = StyleSheet.create({
     ...sharedStyles.textShadow,
     position: 'absolute',
     top: '30%',
-    height: '40%',
     left: '18%',
-    width: '24%',
     fontSize: 360,
     textAlign: 'center',
     color: colors.light.color,
     zIndex: 2,
+    fontFamily: font.regular,
   },
   throttleDisplay: {
     position: 'absolute',

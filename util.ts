@@ -43,6 +43,13 @@ export async function requestAccessFineLocationPermission() {
   return granted === PermissionsAndroid.RESULTS.GRANTED;
 }
 
+export const font = {
+  black: 'Formula1-Display-Black',
+  bold: 'Formula1-Display-Bold',
+  regular: 'Formula1-Display-Regular',
+  wide: 'Formula1-Display-Wide',
+};
+
 export const colors = {
   primaryColor: 'dodgerblue',
   secondaryColor: 'team',

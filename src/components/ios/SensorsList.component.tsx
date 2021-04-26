@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, ViewStyle, Text} from 'react-native';
-import {colors} from '../../../util';
+import {colors, font} from '../../../util';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   flatListItem: {
     borderWidth: 1,
     borderColor: colors.primary.color,
-    borderRadius: 2,
+    borderRadius: 10,
     marginHorizontal: 10,
     marginVertical: 10,
     paddingHorizontal: 10,
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     color: colors.light.color,
     fontSize: 50,
     textAlign: 'center',
+    fontFamily: font.regular,
   },
   flatListUnits: {
     paddingLeft: 10,
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     color: colors.primary.color,
     fontSize: 20,
     textAlign: 'center',
+    fontFamily: font.regular,
   },
 });
 
@@ -59,7 +61,8 @@ function SensorsListComponent(props: {
             <Text style={styles.flatListText}>{item.item.value}</Text>
             <Text style={styles.flatListCaption}>
               {item.item.caption}
-              <Text style={styles.flatListUnits}>{`(${item.item.units})`}</Text>
+              <Text
+                style={styles.flatListUnits}>{`  (${item.item.units})`}</Text>
             </Text>
           </View>
         )}
