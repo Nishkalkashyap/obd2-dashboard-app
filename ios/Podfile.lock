@@ -258,6 +258,8 @@ PODS:
   - react-native-http-bridge (0.6.1):
     - GCDWebServer
     - React
+  - react-native-keep-awake (4.0.0):
+    - React
   - react-native-zeroconf (0.13.1):
     - React-Core
   - React-perflogger (0.64.0)
@@ -368,6 +370,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-http-bridge (from `../node_modules/react-native-http-bridge`)
+  - react-native-keep-awake (from `../node_modules/react-native-keep-awake`)
   - react-native-zeroconf (from `../node_modules/react-native-zeroconf`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -433,6 +436,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-http-bridge:
     :path: "../node_modules/react-native-http-bridge"
+  react-native-keep-awake:
+    :path: "../node_modules/react-native-keep-awake"
   react-native-zeroconf:
     :path: "../node_modules/react-native-zeroconf"
   React-perflogger:
@@ -493,6 +498,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
   react-native-http-bridge: 91548011d07d8ea08ba3c15c42ebc6b60dde5358
+  react-native-keep-awake: eba3137546b10003361b37c761f6c429b59814ae
   react-native-zeroconf: af1ca1f2fbf84b07cb6821f9575b49f621463cd8
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
   React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11
@@ -510,6 +516,6 @@ SPEC CHECKSUMS:
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 1f1e103a226a3306822f4ec6b66f97e5814149f9
+PODFILE CHECKSUM: fc53d3f9cbd2de86082b4822ad431ceed06c0129
 
 COCOAPODS: 1.10.1

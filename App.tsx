@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AppRoot from './src/components/AppRoot.component';
 
+import KeepAwake from 'react-native-keep-awake';
+
 const App = () => {
-  return <AppRoot />;
+  useEffect(() => {
+    KeepAwake.activate();
+    return () => {
+      KeepAwake.deactivate();
+    };
+  }, []);
+
+  return (
+    <>
+      <AppRoot />
+      <KeepAwake />
+    </>
+  );
 };
 
 export default App;

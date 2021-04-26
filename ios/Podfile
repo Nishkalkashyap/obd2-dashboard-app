@@ -14,6 +14,8 @@ target 'ReactNativeBle' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
+
   target 'ReactNativeBleTests' do
     inherit! :complete
     # Pods for testing

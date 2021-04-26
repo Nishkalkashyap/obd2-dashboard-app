@@ -8,7 +8,8 @@
     "ios:device": "react-native run-ios --device \"Nishkal’s iPad\"",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "find-ip": "ipconfig getifaddr en0"
   },
   "dependencies": {
     "bonjour": "^3.5.0",
@@ -16,6 +17,7 @@
     "react-native": "0.64.0",
     "react-native-bluetooth-classic": "^1.60.0-rc.13",
     "react-native-http-bridge": "git+https://github.com/babeone/react-native-http-bridge.git",
+    "react-native-keep-awake": "^4.0.0",
     "react-native-svg": "^12.1.1",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-zeroconf": "^0.13.1"
