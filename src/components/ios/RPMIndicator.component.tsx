@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {colors} from '../../../util';
-import SvgImage from '../../assets/images/rpm.svg';
+import {Svg, Path} from 'react-native-svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,6 +55,37 @@ export const getColorForBar = (index: number, rpmRatio: number) => {
   return [colors.tertiary.shade, colors.tertiary.tint];
 };
 
+const RPMSvg = (props: {
+  color: string;
+  width: number;
+  height: number;
+  style?: ViewStyle;
+}) => {
+  const {color, width, height, style} = props;
+
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 1203 400"
+      fill="none"
+      style={style}>
+      <Path
+        d="M1 291C1 291 132.5 51.4999 261.5 15.5C390.5 -20.4999 1202 23 1202 23V1H1V291Z"
+        fill={color}
+      />
+      <Path
+        d="M1202 276C1202 276 487 96.9998 324 134C161 171 1 399.5 1 399.5H1202V276Z"
+        fill={color}
+      />
+      <Path
+        d="M1 291C1 291 132.5 51.4999 261.5 15.5C390.5 -20.4999 1202 23 1202 23M1 291V399.5M1 291V1H1202V23M1202 23V276M1202 276C1202 276 487 96.9998 324 134C161 171 1 399.5 1 399.5M1202 276V399.5H1"
+        stroke={color}
+      />
+    </Svg>
+  );
+};
+
 function RPMIndicatorComponent(props: {
   width: number;
   parentStyle?: ViewStyle;
@@ -68,7 +99,13 @@ function RPMIndicatorComponent(props: {
   const arr = new Array(totalNumberOfBars).fill(0);
   return (
     <View style={{...styles.container, ...parentStyle}}>
-      <SvgImage width={width} height={height} style={styles.svgImage} />
+      {/* <SvgImage width={width} height={height} style={styles.svgImage} /> */}
+      <RPMSvg
+        width={width}
+        height={height}
+        color={'#000000'}
+        style={styles.svgImage}
+      />
       <View style={styles.barsContainer}>
         {arr.map((item, index) => (
           <View
