@@ -17,6 +17,8 @@ const useHostName = () => {
         setHostname(
           `${http_server_middleware.host}:${http_server_middleware.port}`,
         );
+      } else {
+        setHostname(null);
       }
     });
   }, []);
