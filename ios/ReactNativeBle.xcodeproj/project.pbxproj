@@ -14,6 +14,10 @@
 		691A8586B3C3F9647746618F /* libPods-ReactNativeBle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D239656D53DDB1BC6F836AB /* libPods-ReactNativeBle.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		E67DB5F18BA5842F824B15B6 /* libPods-ReactNativeBle-ReactNativeBleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4EBD15E54B1BEB688E4D930 /* libPods-ReactNativeBle-ReactNativeBleTests.a */; };
+		815DE0F55ED140DB8647AAD9 /* Formula1-Display-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 855F955227C74C659EE1F9E7 /* Formula1-Display-Black.ttf */; };
+		E9CACFEC644E41BDBCD2410B /* Formula1-Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B87B904B78FA4CA8843D6109 /* Formula1-Display-Bold.ttf */; };
+		5281991A2C304075952D65BA /* Formula1-Display-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE87D686D5D1496F8F591CB8 /* Formula1-Display-Regular.ttf */; };
+		EDD158ED889E4391981857C6 /* Formula1-Display-Wide.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0AE30ACC0B84FE7A04D91B9 /* Formula1-Display-Wide.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		A94E093ED8AE8314E4869385 /* Pods-ReactNativeBle-ReactNativeBleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBle-ReactNativeBleTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeBle-ReactNativeBleTests/Pods-ReactNativeBle-ReactNativeBleTests.release.xcconfig"; sourceTree = "<group>"; };
 		E4EBD15E54B1BEB688E4D930 /* libPods-ReactNativeBle-ReactNativeBleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeBle-ReactNativeBleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		855F955227C74C659EE1F9E7 /* Formula1-Display-Black.ttf */ = {isa = PBXFileReference; name = "Formula1-Display-Black.ttf"; path = "../src/assets/fonts/Formula1-Display-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B87B904B78FA4CA8843D6109 /* Formula1-Display-Bold.ttf */ = {isa = PBXFileReference; name = "Formula1-Display-Bold.ttf"; path = "../src/assets/fonts/Formula1-Display-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CE87D686D5D1496F8F591CB8 /* Formula1-Display-Regular.ttf */ = {isa = PBXFileReference; name = "Formula1-Display-Regular.ttf"; path = "../src/assets/fonts/Formula1-Display-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B0AE30ACC0B84FE7A04D91B9 /* Formula1-Display-Wide.ttf */ = {isa = PBXFileReference; name = "Formula1-Display-Wide.ttf"; path = "../src/assets/fonts/Formula1-Display-Wide.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +141,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				7CBE1372671E9C0B582F5535 /* Pods */,
+				F50E249DEA114DAC860C4BAF /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +156,18 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		F50E249DEA114DAC860C4BAF /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				855F955227C74C659EE1F9E7 /* Formula1-Display-Black.ttf */,
+				B87B904B78FA4CA8843D6109 /* Formula1-Display-Bold.ttf */,
+				CE87D686D5D1496F8F591CB8 /* Formula1-Display-Regular.ttf */,
+				B0AE30ACC0B84FE7A04D91B9 /* Formula1-Display-Wide.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +265,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				815DE0F55ED140DB8647AAD9 /* Formula1-Display-Black.ttf in Resources */,
+				E9CACFEC644E41BDBCD2410B /* Formula1-Display-Bold.ttf in Resources */,
+				5281991A2C304075952D65BA /* Formula1-Display-Regular.ttf in Resources */,
+				EDD158ED889E4391981857C6 /* Formula1-Display-Wide.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

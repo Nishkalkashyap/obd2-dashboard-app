@@ -1,5 +1,6 @@
 // react-native.config.js
 module.exports = {
+  assets: ['./src/assets/fonts/'], // stays the sam
   dependencies: {
     'react-native-bluetooth-classic': {
       platforms: {

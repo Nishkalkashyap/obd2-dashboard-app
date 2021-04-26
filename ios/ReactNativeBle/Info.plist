@@ -26,9 +26,11 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>localhost</key>
+			<key>http-server-middleware.local</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
@@ -36,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -51,28 +53,18 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
-	<!-- custom -->
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Fetch OBD data from http middleware server</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_http._tcp</string>
 	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>http-server-middleware.local</key>
-			<dict>
-			<!-- <key>NSIncludesSubdomains</key>
-			<true/> -->
-			<key>NSExceptionAllowsInsecureHTTPLoads</key>
-			<true/>
-		</dict>
-	</dict>
-	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Formula1-Display-Black.ttf</string>
+		<string>Formula1-Display-Bold.ttf</string>
+		<string>Formula1-Display-Regular.ttf</string>
+		<string>Formula1-Display-Wide.ttf</string>
+	</array>
 </dict>
 </plist>
