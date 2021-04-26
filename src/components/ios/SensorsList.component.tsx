@@ -1,31 +1,30 @@
 import React from 'react';
-import {FlatList, StyleSheet, View, ViewStyle, Text} from 'react-native';
+import {StyleSheet, View, ViewStyle, Text} from 'react-native';
 import {colors, font} from '../../../util';
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     // borderWidth: 1,
     // borderColor: 'red',
   },
-  flatList: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
   flatListItem: {
-    borderWidth: 1,
-    borderColor: colors.primary.color,
-    borderRadius: 10,
-    marginHorizontal: 10,
+    // borderWidth: 1,
+    // borderColor: colors.primary.color,
+    // borderRadius: 10,
+    // marginHorizontal: 10,
     marginVertical: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    minWidth: '15%',
+    minWidth: '50%',
   },
   flatListText: {
     color: colors.light.color,
-    fontSize: 50,
+    fontSize: 90,
     textAlign: 'center',
-    fontFamily: font.regular,
+    fontFamily: font.bold,
   },
   flatListUnits: {
     paddingLeft: 10,
@@ -51,7 +50,16 @@ function SensorsListComponent(props: {
 
   return (
     <View style={{...styles.container, ...style}}>
-      <FlatList
+      {list.map(item => (
+        <View style={styles.flatListItem} key={item.caption}>
+          <Text style={styles.flatListText}>{item.value}</Text>
+          <Text style={styles.flatListCaption}>
+            {item.caption}
+            <Text style={styles.flatListUnits}>{`  (${item.units})`}</Text>
+          </Text>
+        </View>
+      ))}
+      {/* <FlatList
         horizontal={true}
         style={styles.flatList}
         keyExtractor={item => item.caption}
@@ -66,7 +74,7 @@ function SensorsListComponent(props: {
             </Text>
           </View>
         )}
-      />
+      /> */}
     </View>
   );
 }

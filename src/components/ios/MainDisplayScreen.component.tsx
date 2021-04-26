@@ -7,7 +7,7 @@ import DataIndicatorComponent from './DataIndicator.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
-import ThrottlePositionIndicatorComponent from './ThrottlePositionIndicator.component';
+// import ThrottlePositionIndicatorComponent from './ThrottlePositionIndicator.component';
 import TimeIndicatorComponent from './TimeIndicator.component';
 
 const sharedStyles = StyleSheet.create({
@@ -73,9 +73,9 @@ const styles = StyleSheet.create({
   },
   rpmText: {
     textAlign: 'center',
-    fontSize: 80,
+    fontSize: 75,
     color: colors.light.color,
-    fontFamily: font.regular,
+    fontFamily: font.bold,
   },
   rpmTextCaption: {
     textAlign: 'center',
@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
   },
   sensorsListContainer: {
     position: 'absolute',
-    bottom: '0%',
-    left: '5%',
-    width: '75%',
+    top: '37%',
+    right: '0%',
+    width: '50%',
     // ...sharedStyles.textShadow,
     // ...sharedStyles.boxShadow,
   },
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.light.color,
     zIndex: 2,
-    fontFamily: font.regular,
+    fontFamily: font.bold,
   },
   throttleDisplay: {
     position: 'absolute',
@@ -137,7 +137,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
     data.fuelPressure,
     data.intakeAirTemperature,
     data.map,
-    // data.vss,
+    data.vss,
     data.sparkAdvance,
   ]
     .filter(item => item?.pid && item.name && item.value)
@@ -174,12 +174,12 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         style={styles.sensorsListContainer}
         list={sensorsList}
       />
-      <ThrottlePositionIndicatorComponent
+      {/* <ThrottlePositionIndicatorComponent
         height={500}
         width={50}
         parentStyle={styles.throttleDisplay}
         currentThrottle={Number(data.tps?.value || '0')}
-      />
+      /> */}
       {/* <Text style={styles.speedDisplay}>Speed</Text> */}
     </View>
   );
