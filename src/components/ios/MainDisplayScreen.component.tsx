@@ -83,8 +83,9 @@ const styles = StyleSheet.create({
   sensorsListContainer: {
     position: 'absolute',
     bottom: '0%',
-    right: '3%',
-    width: '20%',
+    left: '5%',
+    width: '90%',
+    // width: '20%',
     // ...sharedStyles.textShadow,
     // ...sharedStyles.boxShadow,
   },
@@ -160,7 +161,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
       />
       <Text style={styles.gearDisplay}>N</Text>
       <View style={styles.rpmTextContainer}>
-        <Text style={styles.rpmText}>2300</Text>
+        <Text style={styles.rpmText}>{currentRpm}</Text>
         <Text style={styles.rpmTextCaption}>RPM</Text>
       </View>
       <SensorsListComponent

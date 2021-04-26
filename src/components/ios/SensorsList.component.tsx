@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
+    minWidth: '15%',
   },
   flatListText: {
     color: colors.light.color,
@@ -49,6 +50,7 @@ function SensorsListComponent(props: {
   return (
     <View style={{...styles.container, ...style}}>
       <FlatList
+        horizontal={true}
         style={styles.flatList}
         keyExtractor={item => item.caption}
         data={list}
@@ -57,7 +59,7 @@ function SensorsListComponent(props: {
             <Text style={styles.flatListText}>{item.item.value}</Text>
             <Text style={styles.flatListCaption}>
               {item.item.caption}
-              <Text style={styles.flatListUnits}>(deg)</Text>
+              <Text style={styles.flatListUnits}>{`(${item.item.units})`}</Text>
             </Text>
           </View>
         )}
