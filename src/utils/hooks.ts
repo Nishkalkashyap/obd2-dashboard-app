@@ -193,7 +193,7 @@ const useSampleData = () => {
           value: Math.floor(Math.random() * 64).toString(),
         },
       };
-    }, 100);
+    }, 2000);
 
     return () => {
       clearInterval(interval);

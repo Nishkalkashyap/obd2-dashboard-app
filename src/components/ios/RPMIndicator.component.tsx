@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 const totalNumberOfBars = 50;
 
-const getColorForBar = (index: number, rpmRatio: number) => {
+export const getColorForBar = (index: number, rpmRatio: number) => {
   const barRatio = index / totalNumberOfBars;
 
   if (barRatio > rpmRatio) {

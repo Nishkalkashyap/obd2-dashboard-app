@@ -7,6 +7,7 @@ import DataIndicatorComponent from './DataIndicator.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
+import ThrottlePositionIndicatorComponent from './ThrottlePositionIndicator.component';
 import TimeIndicatorComponent from './TimeIndicator.component';
 
 const sharedStyles = StyleSheet.create({
@@ -102,6 +103,11 @@ const styles = StyleSheet.create({
     color: colors.light.color,
     zIndex: 2,
   },
+  throttleDisplay: {
+    position: 'absolute',
+    top: '35%',
+    right: '7%',
+  },
   speedDisplay: {
     ...sharedStyles.borderedContainer,
   },
@@ -131,7 +137,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
     data.fuelPressure,
     data.intakeAirTemperature,
     data.map,
-    data.vss,
+    // data.vss,
     data.sparkAdvance,
   ]
     .filter(item => item?.pid && item.name && item.value)
@@ -167,6 +173,12 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
       <SensorsListComponent
         style={styles.sensorsListContainer}
         list={sensorsList}
+      />
+      <ThrottlePositionIndicatorComponent
+        height={500}
+        width={50}
+        parentStyle={styles.throttleDisplay}
+        currentThrottle={Number(data.tps?.value || '0')}
       />
       {/* <Text style={styles.speedDisplay}>Speed</Text> */}
     </View>
