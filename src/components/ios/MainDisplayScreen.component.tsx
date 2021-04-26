@@ -3,6 +3,7 @@ import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../../util';
 import {PIDS} from '../../obd/obdInfo';
 import {hooks} from '../../utils/hooks';
+import DataIndicatorComponent from './DataIndicator.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
@@ -31,6 +32,11 @@ const seventyPercentWidth = 0.7 * Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
+  },
+  dataIndicatorContainer: {
+    position: 'absolute',
+    top: '4%',
+    left: '2%',
   },
   shiftLightsContainer: {
     position: 'absolute',
@@ -136,6 +142,10 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
 
   return (
     <View style={{...styles.container, width, height}}>
+      <DataIndicatorComponent
+        data={listener}
+        parentStyles={styles.dataIndicatorContainer}
+      />
       <ShiftLightsComponent
         maxRpm={maxRpm}
         currentRpm={currentRpm}
