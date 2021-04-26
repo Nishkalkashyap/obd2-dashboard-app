@@ -7,7 +7,7 @@ import DataIndicatorComponent from './DataIndicator.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
-// import ThrottlePositionIndicatorComponent from './ThrottlePositionIndicator.component';
+import ThrottlePositionIndicatorComponent from './ThrottlePositionIndicator.component';
 import TimeIndicatorComponent from './TimeIndicator.component';
 
 const sharedStyles = StyleSheet.create({
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
   },
   throttleDisplay: {
     position: 'absolute',
-    top: '35%',
-    right: '7%',
+    bottom: '0%',
+    left: '5%',
   },
   speedDisplay: {
     ...sharedStyles.borderedContainer,
@@ -174,12 +174,12 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         style={styles.sensorsListContainer}
         list={sensorsList}
       />
-      {/* <ThrottlePositionIndicatorComponent
-        height={500}
-        width={50}
+      <ThrottlePositionIndicatorComponent
+        length={1000}
+        thickness={50}
         parentStyle={styles.throttleDisplay}
         currentThrottle={Number(data.tps?.value || '0')}
-      /> */}
+      />
       {/* <Text style={styles.speedDisplay}>Speed</Text> */}
     </View>
   );
