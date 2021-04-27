@@ -5,7 +5,9 @@ import {PIDS} from '../../obd/obdInfo';
 import {hooks} from '../../utils/hooks';
 import DataIndicatorComponent from './DataIndicator.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
-import SensorsListComponent from './SensorsList.component';
+import SensorsListComponent, {
+  SensorItemComponent,
+} from './SensorsList.component';
 import ShiftLightsComponent from './ShiftLights.component';
 import ThrottlePositionIndicatorComponent from './ThrottlePositionIndicator.component';
 import TimeIndicatorComponent from './TimeIndicator.component';
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 26,
     color: colors.primary.color,
-    fontFamily: font.regular,
+    fontFamily: font.bold,
   },
   sensorsListContainer: {
     position: 'absolute',
@@ -91,25 +93,35 @@ const styles = StyleSheet.create({
     // ...sharedStyles.textShadow,
     // ...sharedStyles.boxShadow,
   },
-  gearDisplay: {
-    ...sharedStyles.borderedContainer,
-    ...sharedStyles.textShadow,
+  // gearDisplay: {
+  //   ...sharedStyles.borderedContainer,
+  //   ...sharedStyles.textShadow,
+  //   position: 'absolute',
+  //   top: '30%',
+  //   left: '18%',
+  //   fontSize: 360,
+  //   textAlign: 'center',
+  //   color: colors.light.color,
+  //   zIndex: 2,
+  //   fontFamily: font.bold,
+  // },
+  vssDisplay: {
     position: 'absolute',
-    top: '30%',
-    left: '18%',
-    fontSize: 360,
+    top: '50%',
+    left: '20%',
+    width: '20%',
+    paddingHorizontal: 0,
+    paddingVertical: 0,
     textAlign: 'center',
     color: colors.light.color,
     zIndex: 2,
     fontFamily: font.bold,
+    transform: [{scale: 3}],
   },
   throttleDisplay: {
     position: 'absolute',
     bottom: '0%',
     left: '5%',
-  },
-  speedDisplay: {
-    ...sharedStyles.borderedContainer,
   },
 });
 
@@ -137,7 +149,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
     data.fuelPressure,
     data.intakeAirTemperature,
     data.map,
-    data.vss,
+    // data.vss,
     data.sparkAdvance,
   ]
     .filter(item => item?.pid && item.name && item.value)
@@ -165,7 +177,17 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         maxRpm={maxRpm}
         currentRpm={currentRpm}
       />
-      <Text style={styles.gearDisplay}>N</Text>
+      {data.vss && (
+        <SensorItemComponent
+          style={styles.vssDisplay}
+          item={{
+            caption: `${data.vss?.name}`,
+            units: `${data.vss?.unit}`,
+            value: `${data.vss?.value}`,
+          }}
+        />
+      )}
+      {/* <Text style={styles.gearDisplay}>N</Text> */}
       <View style={styles.rpmTextContainer}>
         <Text style={styles.rpmText}>{currentRpm}</Text>
         <Text style={styles.rpmTextCaption}>RPM</Text>
@@ -180,7 +202,6 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         parentStyle={styles.throttleDisplay}
         currentThrottle={Number(data.tps?.value || '0')}
       />
-      {/* <Text style={styles.speedDisplay}>Speed</Text> */}
     </View>
   );
 }
