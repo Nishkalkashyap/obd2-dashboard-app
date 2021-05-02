@@ -143,7 +143,12 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
     sparkAdvance: listener[PIDS.SPARK_ADVANCE],
   };
 
-  const currentRpm = Number(data.rpm?.value) || 0;
+  if (data.sparkAdvance) {
+    data.sparkAdvance.name = 'sparkadv';
+    data.sparkAdvance.unit = 'deg';
+  }
+
+  const currentRpm = Math.floor(Number(data.rpm?.value) || 0);
   const sensorsList = [
     data.ect,
     data.fuelPressure,
