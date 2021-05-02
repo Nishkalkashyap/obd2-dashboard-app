@@ -131,9 +131,46 @@ const useHttpGetRequestData = () => {
   return data;
 };
 
-const useSampleData = () => {
+const useObdFetchRequest = () => {
   const hostname = useHostName();
   const aggregateOBDData = useRef<{[pid: string]: IObdResponse}>({});
+
+  useEffect(() => {
+    const fetchRequest = () => {
+      if (!hostname) {
+        return Promise.reject('No hostname');
+      }
+
+      return fetch(`http://${hostname}/obd/save-data`, {
+        method: 'POST',
+        body: JSON.stringify(aggregateOBDData.current),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+    };
+
+    let canBreak = false;
+
+    Promise.resolve()
+      .then(function recursiveHandle(): Promise<any> {
+        if (canBreak) {
+          return Promise.reject('Can break');
+        }
+        return promiseWithTimeout(5000, fetchRequest()).then(recursiveHandle);
+      })
+      .catch(console.error);
+
+    return () => {
+      canBreak = true;
+    };
+  }, [hostname]);
+
+  return aggregateOBDData;
+};
+
+const useSampleData = () => {
+  const aggregateOBDData = useObdFetchRequest();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -200,38 +237,7 @@ const useSampleData = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
-
-  useEffect(() => {
-    const fetchRequest = () => {
-      if (!hostname) {
-        return Promise.reject('No hostname');
-      }
-
-      return fetch(`http://${hostname}/obd/save-data`, {
-        method: 'POST',
-        body: JSON.stringify(aggregateOBDData.current),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-    };
-
-    let canBreak = false;
-
-    Promise.resolve()
-      .then(function recursiveHandle(): Promise<any> {
-        if (canBreak) {
-          return Promise.reject('Can break');
-        }
-        return promiseWithTimeout(5000, fetchRequest()).then(recursiveHandle);
-      })
-      .catch(console.error);
-
-    return () => {
-      canBreak = true;
-    };
-  }, [hostname]);
+  }, [aggregateOBDData]);
 };
 
 //   useEffect(() => {
@@ -258,6 +264,7 @@ const useSampleData = () => {
 // };
 
 export const hooks = {
+  useObdFetchRequest,
   useSampleData,
   useHostName,
   useDataListener,

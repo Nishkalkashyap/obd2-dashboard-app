@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import {colors} from '../../util';
@@ -87,32 +87,18 @@ function ObdDebuggerComponent(props: {
   const {device, dismissModalHandle} = props;
   const [connected, setConnected] = useState(false);
 
-  const aggregateOBDData = useRef<{[pid: string]: IObdResponse}>({});
-  const hostname = hooks.useHostName();
+  const aggregateOBDData = hooks.useObdFetchRequest();
   const [renderValues, setRenderValues] = useState<IObdResponse[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setRenderValues(Object.values(aggregateOBDData.current));
-      if (hostname) {
-        fetch(`http://${hostname}/obd/save-data`, {
-          method: 'POST',
-          body: JSON.stringify(aggregateOBDData.current),
-          headers: {
-            'content-type': 'application/json',
-          },
-        })
-          .then(response => {
-            console.log(response.status);
-          })
-          .catch(console.error);
-      }
-    }, 100);
+    }, 500);
 
     return () => {
       clearInterval(interval);
     };
-  }, [hostname]);
+  }, [aggregateOBDData]);
 
   /**
    * Register data subscription
@@ -130,7 +116,7 @@ function ObdDebuggerComponent(props: {
     return () => {
       subscription.remove();
     };
-  }, [device, connected]);
+  }, [device, connected, aggregateOBDData]);
 
   // useEffect(() => {
   //   if (!connected) {
