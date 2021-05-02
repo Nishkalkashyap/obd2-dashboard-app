@@ -136,11 +136,28 @@ const useObdFetchRequest = () => {
   const aggregateOBDData = useRef<{[pid: string]: IObdResponse}>({});
 
   useEffect(() => {
+    let prevData: null | string = null;
     const fetchRequest = () => {
       if (!hostname) {
         return Promise.reject('No hostname');
       }
 
+      /**
+       * Check if data is same as before
+       */
+      const currentData = JSON.stringify(aggregateOBDData.current);
+      if (prevData === currentData) {
+        return promiseWithTimeout(
+          100,
+          new Promise((resolve: any) => {
+            setTimeout(() => {
+              resolve();
+            }, 50);
+          }),
+        );
+      }
+
+      prevData = JSON.stringify(aggregateOBDData.current);
       return fetch(`http://${hostname}/obd/save-data`, {
         method: 'POST',
         body: JSON.stringify(aggregateOBDData.current),

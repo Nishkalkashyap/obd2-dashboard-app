@@ -134,12 +134,12 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
   const data = {
     ect: listener[PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR],
     rpm: listener[PIDS.ENGINE_RPM],
-    engineRuntime: listener[PIDS.ENGINE_RUNTIME], //pending
+    // engineRuntime: listener[PIDS.ENGINE_RUNTIME], //pending
     fuelPressure: listener[PIDS.FUEL_PRESSURE_SENSOR],
     intakeAirTemperature: listener[PIDS.INTAKE_AIR_TEMPERATURE_SENSOR],
     map: listener[PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR],
     tps: listener[PIDS.THROTTLE_POSITION_SENSOR],
-    vss: listener[PIDS.VEHICLE_SPEED_SENSOR], //pending
+    vss: listener[PIDS.VEHICLE_SPEED_SENSOR],
     sparkAdvance: listener[PIDS.SPARK_ADVANCE],
   };
 

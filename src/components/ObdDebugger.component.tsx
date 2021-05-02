@@ -33,10 +33,10 @@ const pidsToReadWithDelay = [
     PID: PIDS.ENGINE_RPM,
     delay: 100,
   },
-  {
-    PID: PIDS.ENGINE_RUNTIME,
-    delay: 3000,
-  },
+  // {
+  //   PID: PIDS.ENGINE_RUNTIME,
+  //   delay: 3000,
+  // },
   {
     PID: PIDS.FUEL_PRESSURE_SENSOR,
     delay: 2000,
