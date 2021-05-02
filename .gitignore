@@ -57,3 +57,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# custom
+index.android.bundle
+android/app/src/main/res/raw/app.json

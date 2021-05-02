@@ -9,7 +9,11 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "find-ip": "ipconfig getifaddr en0"
+    "find-ip": "ipconfig getifaddr en0",
+    "build:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
+    "dist:ios": "react-native run-ios --device \"Nishkal’s iPad\" --configuration=release",
+    "dist:android": "cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
     "bonjour": "^3.5.0",
