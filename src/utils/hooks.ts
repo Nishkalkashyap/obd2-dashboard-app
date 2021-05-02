@@ -178,7 +178,9 @@ const useSampleData = () => {
           name: 'throttlepos',
           pid: PIDS.THROTTLE_POSITION_SENSOR,
           unit: '%',
-          value: Math.floor(Math.random() * 100).toString(),
+          value: Math.floor(Math.random() * 100)
+            .toString()
+            .concat('.702004'),
         },
         [PIDS.VEHICLE_SPEED_SENSOR]: {
           name: 'vss',
@@ -193,7 +195,7 @@ const useSampleData = () => {
           value: Math.floor(Math.random() * 64).toString(),
         },
       };
-    }, 2000);
+    }, 100);
 
     return () => {
       clearInterval(interval);

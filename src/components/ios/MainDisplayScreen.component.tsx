@@ -159,6 +159,10 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
       units: item?.unit || '',
     }));
 
+  const currentTpsValue = Number.parseFloat(
+    Number.parseFloat(data.tps?.value || '0').toPrecision(3),
+  );
+
   return (
     <View style={{...styles.container, width, height}}>
       <DataIndicatorComponent
@@ -197,10 +201,10 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         list={sensorsList}
       />
       <ThrottlePositionIndicatorComponent
-        length={1000}
+        length={950}
         thickness={50}
         parentStyle={styles.throttleDisplay}
-        currentThrottle={Number(data.tps?.value || '0')}
+        currentThrottle={currentTpsValue}
       />
     </View>
   );

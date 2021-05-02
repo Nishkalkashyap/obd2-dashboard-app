@@ -47,7 +47,7 @@ function ThrottlePositionIndicatorComponent(props: {
     <View style={{...styles.container, ...parentStyle}}>
       <SensorItemComponent
         item={{caption: 'TPS', units: '%', value: `${currentThrottle}`}}
-        style={{minWidth: '15%', marginRight: 20}}
+        style={{minWidth: '20%', marginRight: 20}}
       />
       <View style={styles.barsContainer}>
         {arr.map((item, index) => (
