@@ -1,10 +1,22 @@
 import React from 'react';
 import {Colors, colors as initialColors} from '../../util';
 
-type ThemeHandler = (colors: Colors) => void;
+type DerivedColors = {
+  backgroundColor: string;
+  textColor: string;
+};
+type ExtendedColors = Colors & DerivedColors;
+type ThemeHandler = (colors: ExtendedColors) => void;
 type Themes = 'red' | 'blue' | 'green';
 export class ThemeProvider {
-  private _deaultColors: Colors = JSON.parse(JSON.stringify(initialColors));
+  private _defaultDerivedColors: DerivedColors = {
+    backgroundColor: '#ffffff',
+    textColor: '#000000',
+  };
+
+  private _deaultColors: ExtendedColors = JSON.parse(
+    JSON.stringify({...initialColors, ...this._defaultDerivedColors}),
+  );
 
   public get defaultColors() {
     return this._deaultColors;
@@ -37,20 +49,28 @@ export class ThemeProvider {
     return this._currentTheme;
   }
 
-  private _getThemeFromType = (themeType: 'red' | 'blue' | 'green') => {
+  private _getThemeFromType = (
+    themeType: 'red' | 'blue' | 'green',
+  ): ExtendedColors => {
     const proxiedColors: Colors = JSON.parse(
       JSON.stringify(this._deaultColors),
     );
+    const extendedColors: ExtendedColors = {
+      ...proxiedColors,
+      backgroundColor: '#ffffff',
+      textColor: '#000000',
+    };
+
     if (themeType === 'red') {
-      proxiedColors.primary.color = '#ff0000';
+      extendedColors.primary.color = '#ff0000';
     }
     if (themeType === 'blue') {
-      proxiedColors.primary.color = '#0000ff';
+      extendedColors.primary.color = '#0000ff';
     }
     if (themeType === 'green') {
-      proxiedColors.primary.color = '#00ff00';
+      extendedColors.primary.color = '#00ff00';
     }
-    return proxiedColors;
+    return extendedColors;
   };
 
   public changeTheme() {

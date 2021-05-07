@@ -52,8 +52,6 @@ export const font = {
 
 export type Colors = typeof colors;
 export const colors = {
-  backgroundColor: '#333333',
-  textColor: '#ffff00',
   primary: {
     color: '#3880ff',
     shade: '#3171e0',
