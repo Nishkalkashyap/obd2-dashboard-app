@@ -20,6 +20,7 @@
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-bluetooth-classic": "^1.60.0-rc.16",
+    "react-native-get-location": "^2.1.0",
     "react-native-http-bridge": "git+https://github.com/babeone/react-native-http-bridge.git",
     "react-native-keep-awake": "^4.0.0",
     "react-native-maps": "^0.28.0",

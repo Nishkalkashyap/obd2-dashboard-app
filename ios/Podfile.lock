@@ -211,6 +211,8 @@ PODS:
     - React
   - react-native-keep-awake (4.0.0):
     - React
+  - react-native-maps (0.28.0):
+    - React-Core
   - react-native-zeroconf (0.13.1):
     - React-Core
   - React-perflogger (0.64.0)
@@ -277,6 +279,8 @@ PODS:
     - React-cxxreact (= 0.64.0)
     - React-jsi (= 0.64.0)
     - React-perflogger (= 0.64.0)
+  - ReactNativeGetLocation (2.1.0):
+    - React
   - RNSVG (12.1.1):
     - React
   - Yoga (1.14.0)
@@ -301,6 +305,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-http-bridge (from `../node_modules/react-native-http-bridge`)
   - react-native-keep-awake (from `../node_modules/react-native-keep-awake`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-zeroconf (from `../node_modules/react-native-zeroconf`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -314,6 +319,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - ReactNativeGetLocation (from `../node_modules/react-native-get-location`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -357,6 +363,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-http-bridge"
   react-native-keep-awake:
     :path: "../node_modules/react-native-keep-awake"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
   react-native-zeroconf:
     :path: "../node_modules/react-native-zeroconf"
   React-perflogger:
@@ -383,6 +391,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeGetLocation:
+    :path: "../node_modules/react-native-get-location"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   Yoga:
@@ -408,6 +418,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
   react-native-http-bridge: 91548011d07d8ea08ba3c15c42ebc6b60dde5358
   react-native-keep-awake: eba3137546b10003361b37c761f6c429b59814ae
+  react-native-maps: 2d405b4e8cee0282e4c02bac434d81450dfea877
   react-native-zeroconf: af1ca1f2fbf84b07cb6821f9575b49f621463cd8
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
   React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11
@@ -421,9 +432,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: 0fd6b21751a33cb72fce1a4a33ab9678416d307a
   React-runtimeexecutor: cad74a1eaa53ee6e7a3620231939d8fe2c6afcf0
   ReactCommon: cfe2b7fd20e0dbd2d1185cd7d8f99633fbc5ff05
+  ReactNativeGetLocation: 7ed719807f65206e20b6793896372b11ad835d6d
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
-PODFILE CHECKSUM: 3c50a8e5ff8c52267a704fdf088e67c5b4b0940b
+PODFILE CHECKSUM: fb2714f85dc518757f19e8608c1db53267b5e7b1
 
 COCOAPODS: 1.10.1
