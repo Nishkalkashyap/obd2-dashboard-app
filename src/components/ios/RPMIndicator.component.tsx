@@ -1,11 +1,13 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {Svg, Path} from 'react-native-svg';
-import {Colors} from '../../../util';
-import {ThemeContext} from '../../services/theme-provider.service';
+import {
+  ThemeContext,
+  ExtendedThemeColors,
+} from '../../services/theme-provider.service';
 import {hooks} from '../../utils/hooks';
 
-const stylesCreator = (colors: Colors) =>
+const stylesCreator = (colors: ExtendedThemeColors) =>
   StyleSheet.create({
     container: {
       // borderWidth: 1,
@@ -39,25 +41,40 @@ const totalNumberOfBars = 50;
 export const getColorForBar = (
   index: number,
   rpmRatio: number,
-  colors: Colors,
+  colors: ExtendedThemeColors,
 ) => {
   const barRatio = index / totalNumberOfBars;
 
   if (barRatio > rpmRatio) {
-    return [colors.primary.color, colors.primary.tint];
+    return [
+      colors.rpmIndicator.baseColor.color,
+      colors.rpmIndicator.baseColor.tint,
+    ];
   }
 
   if (index < 0.1 * totalNumberOfBars) {
-    return [colors.secondary.shade, colors.secondary.tint];
+    return [
+      colors.rpmIndicator.lowColor.shade,
+      colors.rpmIndicator.lowColor.tint,
+    ];
   }
   if (index < 0.7 * totalNumberOfBars) {
-    return [colors.success.shade, colors.success.tint];
+    return [
+      colors.rpmIndicator.midColor.shade,
+      colors.rpmIndicator.midColor.tint,
+    ];
   }
   if (index < 0.9 * totalNumberOfBars) {
-    return [colors.warn.shade, colors.warn.tint];
+    return [
+      colors.rpmIndicator.highColor.shade,
+      colors.rpmIndicator.highColor.tint,
+    ];
   }
 
-  return [colors.tertiary.shade, colors.tertiary.tint];
+  return [
+    colors.rpmIndicator.extremeColor.shade,
+    colors.rpmIndicator.extremeColor.tint,
+  ];
 };
 
 const RPMSvg = (props: {

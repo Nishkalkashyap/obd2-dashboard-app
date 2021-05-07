@@ -1,20 +1,46 @@
 import React from 'react';
-import {Colors, colors as initialColors} from '../../util';
+import {colors, Colors, colors as initialColors} from '../../util';
 
 type DerivedColors = {
   backgroundColor: string;
   textColor: string;
+  shiftLights: {
+    restingColor: string;
+    lowColor: Colors['danger'];
+    midColor: Colors['danger'];
+    highColor: Colors['danger'];
+  };
+  rpmIndicator: {
+    baseColor: Colors['danger'];
+    lowColor: Colors['danger'];
+    midColor: Colors['danger'];
+    highColor: Colors['danger'];
+    extremeColor: Colors['danger'];
+  };
 };
-type ExtendedColors = Colors & DerivedColors;
-type ThemeHandler = (colors: ExtendedColors) => void;
-type Themes = 'red' | 'blue' | 'green';
+export type ExtendedThemeColors = Colors & DerivedColors;
+type ThemeHandler = (colors: ExtendedThemeColors) => void;
+type Themes = 'light' | 'dark';
 export class ThemeProvider {
   private _defaultDerivedColors: DerivedColors = {
     backgroundColor: '#ffffff',
     textColor: '#000000',
+    shiftLights: {
+      restingColor: colors.medium.color,
+      lowColor: colors.success,
+      midColor: colors.danger,
+      highColor: colors.secondary,
+    },
+    rpmIndicator: {
+      baseColor: colors.primary,
+      lowColor: colors.secondary,
+      midColor: colors.success,
+      highColor: colors.warn,
+      extremeColor: colors.tertiary,
+    },
   };
 
-  private _deaultColors: ExtendedColors = JSON.parse(
+  private _deaultColors: ExtendedThemeColors = JSON.parse(
     JSON.stringify({...initialColors, ...this._defaultDerivedColors}),
   );
 
@@ -32,8 +58,8 @@ export class ThemeProvider {
     };
   }
 
-  private _currentTheme: Themes = 'red';
-  private _themes: Themes[] = ['red', 'blue', 'green'];
+  private _currentTheme: Themes = 'light';
+  private _themes: Themes[] = ['light', 'dark'];
 
   private _getNextTheme() {
     const currentThemeIndex = this._themes.findIndex(
@@ -49,26 +75,20 @@ export class ThemeProvider {
     return this._currentTheme;
   }
 
-  private _getThemeFromType = (
-    themeType: 'red' | 'blue' | 'green',
-  ): ExtendedColors => {
+  private _getThemeFromType = (themeType: Themes): ExtendedThemeColors => {
     const proxiedColors: Colors = JSON.parse(
       JSON.stringify(this._deaultColors),
     );
-    const extendedColors: ExtendedColors = {
+    const extendedColors: ExtendedThemeColors = {
       ...proxiedColors,
-      backgroundColor: '#ffffff',
-      textColor: '#000000',
+      ...this._defaultDerivedColors,
     };
 
-    if (themeType === 'red') {
+    if (themeType === 'dark') {
       extendedColors.primary.color = '#ff0000';
     }
-    if (themeType === 'blue') {
+    if (themeType === 'light') {
       extendedColors.primary.color = '#0000ff';
-    }
-    if (themeType === 'green') {
-      extendedColors.primary.color = '#00ff00';
     }
     return extendedColors;
   };

@@ -33,14 +33,14 @@ function ShiftLightsComponent(props: {
 
   const {maxRpm, currentRpm, parentStyles} = props;
   const list = [
-    [colors.success.color, colors.success.tint],
-    [colors.success.color, colors.success.tint],
-    [colors.danger.color, colors.danger.tint],
-    [colors.danger.color, colors.danger.tint],
-    [colors.danger.color, colors.danger.tint],
-    [colors.secondary.color, colors.secondary.tint],
-    [colors.secondary.color, colors.secondary.tint],
-    [colors.secondary.color, colors.secondary.tint],
+    [colors.shiftLights.lowColor.color, colors.shiftLights.lowColor.tint],
+    [colors.shiftLights.lowColor.color, colors.shiftLights.lowColor.tint],
+    [colors.shiftLights.midColor.color, colors.shiftLights.midColor.tint],
+    [colors.shiftLights.midColor.color, colors.shiftLights.midColor.tint],
+    [colors.shiftLights.midColor.color, colors.shiftLights.midColor.tint],
+    [colors.shiftLights.highColor.color, colors.shiftLights.highColor.tint],
+    [colors.shiftLights.highColor.color, colors.shiftLights.highColor.tint],
+    [colors.shiftLights.highColor.color, colors.shiftLights.highColor.tint],
   ];
   const rpmRatio = currentRpm / maxRpm;
 
