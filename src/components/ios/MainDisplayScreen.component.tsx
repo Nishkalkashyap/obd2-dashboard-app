@@ -210,10 +210,9 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         <Text style={styles.rpmText}>{currentRpm}</Text>
         <Text
           style={styles.rpmTextCaption}
-          // onPress={() => {
-          //   theme.changeTheme();
-          // }}
-        >
+          onPress={() => {
+            theme.changeTheme();
+          }}>
           RPM
         </Text>
       </View>
