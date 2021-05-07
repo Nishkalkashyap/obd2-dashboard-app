@@ -40,6 +40,9 @@ export class ThemeProvider {
     },
   };
 
+  private _defaultColors: ExtendedThemeColors = JSON.parse(
+    JSON.stringify({...initialColors, ...this._defaultDerivedColors}),
+  );
   private _currentColors: ExtendedThemeColors = JSON.parse(
     JSON.stringify({...initialColors, ...this._defaultDerivedColors}),
   );
@@ -58,8 +61,8 @@ export class ThemeProvider {
     };
   }
 
-  private _currentTheme: Themes = 'red';
-  private _themes: Themes[] = ['light', 'dark', 'red'];
+  private _currentTheme: Themes = 'light';
+  private _themes: Themes[] = ['light', 'dark'];
 
   private _getNextTheme() {
     const currentThemeIndex = this._themes.findIndex(
@@ -76,38 +79,40 @@ export class ThemeProvider {
   }
 
   private _getThemeFromType = (themeType: Themes): ExtendedThemeColors => {
-    const proxiedColors: Colors = JSON.parse(
-      JSON.stringify(this._currentColors),
+    let extendedColors: ExtendedThemeColors = JSON.parse(
+      JSON.stringify(this._defaultColors),
     );
-    let extendedColors: ExtendedThemeColors = {
-      ...proxiedColors,
-      ...this._defaultDerivedColors,
-    };
 
     if (themeType === 'light') {
-      // extendedColors.primary.color = '#0000ff';
+      // do nothing
     }
     if (themeType === 'dark') {
       extendedColors.textColor = '#ffffff';
       extendedColors.backgroundColor = '#000000';
     }
     if (themeType === 'red') {
+      const danger: Colors['danger'] = {
+        color: '#D40000',
+        shade: '#D40000',
+        tint: '#D40000',
+      };
+
       extendedColors = {
         ...extendedColors,
-        primary: proxiedColors.warn,
-        backgroundColor: '#D40000',
-        textColor: '#ffffff',
+        primary: danger,
+        backgroundColor: '#ffffff',
+        textColor: '#D40000',
         shiftLights: {
-          restingColor: '#ffffff99',
+          restingColor: colors.medium.color,
           lowColor: colors.light,
-          midColor: colors.warn,
-          highColor: colors.dark,
+          midColor: danger,
+          highColor: colors.success,
         },
         rpmIndicator: {
           baseColor: colors.light,
           lowColor: colors.light,
-          midColor: colors.warn,
-          highColor: colors.dark,
+          midColor: danger,
+          highColor: colors.success,
           extremeColor: colors.dark,
         },
       };

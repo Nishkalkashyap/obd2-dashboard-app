@@ -285,15 +285,15 @@ const useSampleData = () => {
 //   }, [hostname]);
 // };
 
-const useColors = (theme: ThemeProvider) => {
-  const [colors, setColors] = useState(theme.currentColors);
+const useColors = (theme?: ThemeProvider) => {
+  const [colors, setColors] = useState(theme?.currentColors!);
 
   useEffect(() => {
-    const listener = theme.onDidChangeColors(color => {
+    const listener = theme?.onDidChangeColors(color => {
       setColors(color);
     });
     return () => {
-      listener.remove();
+      listener?.remove();
     };
   }, [theme]);
 
