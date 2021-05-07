@@ -286,7 +286,7 @@ const useSampleData = () => {
 // };
 
 const useColors = (theme: ThemeProvider) => {
-  const [colors, setColors] = useState(theme.defaultColors);
+  const [colors, setColors] = useState(theme.currentColors);
 
   useEffect(() => {
     const listener = theme.onDidChangeColors(color => {

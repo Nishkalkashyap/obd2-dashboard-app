@@ -60,7 +60,7 @@ function ShiftLightsComponent(props: {
               ...styles.light,
               backgroundColor: canHighlight
                 ? item.item[0]
-                : colors.medium.shade,
+                : colors.shiftLights.restingColor,
               shadowColor: canHighlight ? item.item[1] : '#00000000',
             }}
           />

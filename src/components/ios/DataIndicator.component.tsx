@@ -35,7 +35,9 @@ function DataIndicatorComponent(props: {data: any; parentStyles: ViewStyle}) {
     <View
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
-        backgroundColor: blink ? colors.tertiary.tint : colors.medium.shade,
+        backgroundColor: blink
+          ? colors.primary.color
+          : colors.shiftLights.restingColor,
         ...styles.container,
         ...parentStyles,
       }}

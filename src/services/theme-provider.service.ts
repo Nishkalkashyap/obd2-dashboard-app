@@ -40,12 +40,12 @@ export class ThemeProvider {
     },
   };
 
-  private _deaultColors: ExtendedThemeColors = JSON.parse(
+  private _currentColors: ExtendedThemeColors = JSON.parse(
     JSON.stringify({...initialColors, ...this._defaultDerivedColors}),
   );
 
-  public get defaultColors() {
-    return this._deaultColors;
+  public get currentColors() {
+    return this._currentColors;
   }
 
   private _handlers: ThemeHandler[] = [];
@@ -58,7 +58,7 @@ export class ThemeProvider {
     };
   }
 
-  private _currentTheme: Themes = 'light';
+  private _currentTheme: Themes = 'red';
   private _themes: Themes[] = ['light', 'dark', 'red'];
 
   private _getNextTheme() {
@@ -77,9 +77,9 @@ export class ThemeProvider {
 
   private _getThemeFromType = (themeType: Themes): ExtendedThemeColors => {
     const proxiedColors: Colors = JSON.parse(
-      JSON.stringify(this._deaultColors),
+      JSON.stringify(this._currentColors),
     );
-    const extendedColors: ExtendedThemeColors = {
+    let extendedColors: ExtendedThemeColors = {
       ...proxiedColors,
       ...this._defaultDerivedColors,
     };
@@ -92,8 +92,25 @@ export class ThemeProvider {
       extendedColors.backgroundColor = '#000000';
     }
     if (themeType === 'red') {
-      extendedColors.textColor = '#ffffff';
-      extendedColors.backgroundColor = '#D40000';
+      extendedColors = {
+        ...extendedColors,
+        primary: proxiedColors.warn,
+        backgroundColor: '#D40000',
+        textColor: '#ffffff',
+        shiftLights: {
+          restingColor: '#ffffff99',
+          lowColor: colors.light,
+          midColor: colors.warn,
+          highColor: colors.dark,
+        },
+        rpmIndicator: {
+          baseColor: colors.light,
+          lowColor: colors.light,
+          midColor: colors.warn,
+          highColor: colors.dark,
+          extremeColor: colors.dark,
+        },
+      };
     }
     return extendedColors;
   };
@@ -103,6 +120,10 @@ export class ThemeProvider {
     this._handlers.forEach(handler => {
       handler(nextTheme);
     });
+  }
+
+  constructor() {
+    this._currentColors = this._getThemeFromType(this._currentTheme);
   }
 }
 
