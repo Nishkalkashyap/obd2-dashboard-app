@@ -12,6 +12,7 @@ import {
   ExtendedThemeColors,
   ThemeContext,
 } from '../../services/theme-provider.service';
+import {helpers} from '../../utils/helpers';
 import {hooks} from '../../utils/hooks';
 import DataIndicatorComponent from './DataIndicator.component';
 import MapViewComponent from './MapView.component';
@@ -156,7 +157,9 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
 
   const maxRpm = 6000;
 
-  const listener = hooks.useDataListener();
+  const defaultData = helpers.getSampleData(true);
+
+  const listener = hooks.useDataListener() || defaultData;
   const data = {
     ect: listener[PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR],
     rpm: listener[PIDS.ENGINE_RPM],
@@ -192,9 +195,9 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
 
   if (canShowMap && data.vss) {
     sensorsList.push({
-      caption: data.vss.name!,
-      units: data.vss.unit!,
-      value: data.vss.value!,
+      caption: data.vss.name || '',
+      units: data.vss.unit || '',
+      value: data.vss.value || '',
     });
   }
 
@@ -221,13 +224,16 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         currentRpm={currentRpm}
       />
       {canShowMap && <MapViewComponent styles={styles.mapDisplay} />}
-      {data.vss && !canShowMap && (
+      {!canShowMap && (
         <SensorItemComponent
           style={styles.vssDisplay}
           item={{
             caption: `${data.vss?.name}`,
             units: `${data.vss?.unit}`,
             value: `${data.vss?.value}`,
+          }}
+          onClick={() => {
+            setCanShowMap(true);
           }}
         />
       )}

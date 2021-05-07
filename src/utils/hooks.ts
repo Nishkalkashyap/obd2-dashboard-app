@@ -1,9 +1,9 @@
 import {useEffect, useRef, useState} from 'react';
 import Zeroconf from 'react-native-zeroconf';
 import {promiseWithTimeout} from '../../util';
-import {PIDS} from '../obd/obdInfo';
 import {IObdResponse} from '../obd/obdTypes';
 import {ThemeProvider} from '../services/theme-provider.service';
+import {helpers} from './helpers';
 const httpBridge = require('react-native-http-bridge');
 
 const useHostName = () => {
@@ -35,7 +35,7 @@ const useDataListener = () => {
   );
   const [aggregatedData, setAggregatedData] = useState<{
     [pid: string]: IObdResponse | null;
-  }>({});
+  } | null>(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,7 +75,9 @@ const useDataListener = () => {
 
     return () => {
       try {
-        httpBridge.stop();
+        if (process.env.NODE_ENV !== 'development') {
+          httpBridge.stop();
+        }
       } catch (err) {
         console.error('Failed to stop bridge');
       }
@@ -196,64 +198,7 @@ const useSampleData = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      aggregateOBDData.current = {
-        [PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR]: {
-          name: 'temp',
-          pid: PIDS.ENGINE_COOLANT_TEMPERATURE_SENSOR,
-          unit: 'Celsius',
-          value: Math.floor(Math.random() * 100).toString(),
-        },
-        [PIDS.ENGINE_RPM]: {
-          name: 'rpm',
-          pid: PIDS.ENGINE_RPM,
-          unit: 'rev/min',
-          value: Math.floor(Math.random() * 6000).toString(),
-        },
-        [PIDS.ENGINE_RUNTIME]: {
-          name: 'runtm',
-          pid: PIDS.ENGINE_RPM,
-          unit: 'seconds',
-          value: new Date().toLocaleTimeString(),
-        },
-        [PIDS.FUEL_PRESSURE_SENSOR]: {
-          name: 'frp',
-          pid: PIDS.ENGINE_RPM,
-          unit: 'kPa',
-          value: Math.floor(Math.random() * 800).toString(),
-        },
-        [PIDS.INTAKE_AIR_TEMPERATURE_SENSOR]: {
-          name: 'iat',
-          pid: PIDS.INTAKE_AIR_TEMPERATURE_SENSOR,
-          unit: 'Celsius',
-          value: Math.floor(Math.random() * 100).toString(),
-        },
-        [PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR]: {
-          name: 'map',
-          pid: PIDS.INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR,
-          unit: 'kPa',
-          value: Math.floor(Math.random() * 255).toString(),
-        },
-        [PIDS.THROTTLE_POSITION_SENSOR]: {
-          name: 'throttlepos',
-          pid: PIDS.THROTTLE_POSITION_SENSOR,
-          unit: '%',
-          value: Math.floor(Math.random() * 100)
-            .toString()
-            .concat('.702004'),
-        },
-        [PIDS.VEHICLE_SPEED_SENSOR]: {
-          name: 'vss',
-          pid: PIDS.VEHICLE_SPEED_SENSOR,
-          unit: 'km/h',
-          value: Math.floor(Math.random() * 255).toString(),
-        },
-        [PIDS.SPARK_ADVANCE]: {
-          name: 'sparkadv',
-          pid: PIDS.SPARK_ADVANCE,
-          unit: 'deg',
-          value: Math.floor(Math.random() * 64).toString(),
-        },
-      };
+      aggregateOBDData.current = helpers.getSampleData();
     }, 100);
 
     return () => {
