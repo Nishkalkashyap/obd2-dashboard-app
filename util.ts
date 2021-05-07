@@ -52,8 +52,7 @@ export const font = {
 
 export type Colors = typeof colors;
 export const colors = {
-  primaryColor: 'dodgerblue',
-  secondaryColor: 'team',
+  backgroundColor: '#333333',
   textColor: '#ffffff',
   primary: {
     color: '#3880ff',

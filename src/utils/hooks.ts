@@ -74,7 +74,11 @@ const useDataListener = () => {
     }, 5000);
 
     return () => {
-      httpBridge.stop();
+      try {
+        httpBridge.stop();
+      } catch (err) {
+        console.error('Failed to stop bridge');
+      }
     };
   }, []);
 

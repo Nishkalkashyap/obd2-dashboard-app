@@ -16,7 +16,7 @@ const stylesCreator = (colors: Colors) =>
       position: 'absolute',
       top: '0%',
       borderWidth: 1,
-      borderColor: '#000',
+      borderColor: colors.backgroundColor,
     },
     barsContainer: {
       position: 'absolute',
@@ -30,9 +30,7 @@ const stylesCreator = (colors: Colors) =>
     bar: {
       backgroundColor: colors.primary.color,
       borderWidth: 1,
-      // shadowOpacity: 1,
-      // shadowOffset: {width: 0, height: 0},
-      // shadowRadius: 3,
+      borderColor: colors.backgroundColor,
     },
   });
 
@@ -114,7 +112,7 @@ function RPMIndicatorComponent(props: {
       <RPMSvg
         width={width}
         height={height}
-        color={'#000000'}
+        color={colors.backgroundColor}
         style={styles.svgImage}
       />
       <View style={styles.barsContainer}>

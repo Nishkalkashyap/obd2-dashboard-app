@@ -30,6 +30,7 @@ const stylesCreator = (colors: Colors) =>
       backgroundColor: colors.primary.color,
       borderWidth: 1,
       borderRadius: 5,
+      borderColor: colors.backgroundColor,
     },
   });
 

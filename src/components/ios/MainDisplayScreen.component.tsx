@@ -38,7 +38,7 @@ const seventyPercentWidth = 0.7 * Dimensions.get('screen').width;
 const stylesCreator = (colors: Colors) =>
   StyleSheet.create({
     container: {
-      backgroundColor: '#000000',
+      backgroundColor: colors.backgroundColor,
     },
     dataIndicatorContainer: {
       position: 'absolute',
