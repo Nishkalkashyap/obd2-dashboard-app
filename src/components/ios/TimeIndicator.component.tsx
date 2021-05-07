@@ -7,7 +7,7 @@ import {hooks} from '../../utils/hooks';
 const stylesCreator = (colors: Colors) =>
   StyleSheet.create({
     text: {
-      color: colors.light.color,
+      color: colors.textColor,
       fontSize: 20,
     },
   });

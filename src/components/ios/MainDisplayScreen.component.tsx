@@ -80,13 +80,13 @@ const stylesCreator = (colors: Colors) =>
     rpmText: {
       textAlign: 'center',
       fontSize: 75,
-      color: colors.light.color,
+      color: colors.textColor,
       fontFamily: font.bold,
     },
     rpmTextCaption: {
       textAlign: 'center',
       fontSize: 26,
-      color: colors.primary.color,
+      color: colors.textColor,
       fontFamily: font.bold,
     },
     sensorsListContainer: {
@@ -117,7 +117,7 @@ const stylesCreator = (colors: Colors) =>
       paddingHorizontal: 0,
       paddingVertical: 0,
       textAlign: 'center',
-      color: colors.light.color,
+      color: colors.textColor,
       zIndex: 2,
       fontFamily: font.bold,
       transform: [{scale: 3}],

@@ -18,7 +18,7 @@ const stylesCreator = (colors: Colors) =>
       minWidth: '50%',
     },
     flatListText: {
-      color: colors.light.color,
+      color: colors.textColor,
       fontSize: 90,
       textAlign: 'center',
       fontFamily: font.bold,
@@ -27,7 +27,7 @@ const stylesCreator = (colors: Colors) =>
       paddingLeft: 10,
     },
     flatListCaption: {
-      color: colors.light.color,
+      color: colors.textColor,
       fontSize: 20,
       textAlign: 'center',
       fontFamily: font.bold,

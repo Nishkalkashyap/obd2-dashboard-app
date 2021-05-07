@@ -58,8 +58,10 @@ function ShiftLightsComponent(props: {
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
               ...styles.light,
-              backgroundColor: canHighlight ? item.item[0] : '#ffffff22',
-              shadowColor: canHighlight ? item.item[1] : '#ffffff22',
+              backgroundColor: canHighlight
+                ? item.item[0]
+                : colors.medium.shade,
+              shadowColor: canHighlight ? item.item[1] : '#00000000',
             }}
           />
         );
