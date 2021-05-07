@@ -4,6 +4,7 @@ import {colors, font} from '../../../util';
 import {PIDS} from '../../obd/obdInfo';
 import {hooks} from '../../utils/hooks';
 import DataIndicatorComponent from './DataIndicator.component';
+import MapViewComponent from './MapView.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent, {
   SensorItemComponent,
@@ -186,6 +187,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         maxRpm={maxRpm}
         currentRpm={currentRpm}
       />
+      <MapViewComponent />
       {data.vss && (
         <SensorItemComponent
           style={styles.vssDisplay}
