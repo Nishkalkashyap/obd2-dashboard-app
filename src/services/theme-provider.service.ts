@@ -20,7 +20,7 @@ type DerivedColors = {
 };
 export type ExtendedThemeColors = Colors & DerivedColors;
 type ThemeHandler = (colors: ExtendedThemeColors) => void;
-type Themes = 'light' | 'dark';
+type Themes = 'light' | 'dark' | 'red';
 export class ThemeProvider {
   private _defaultDerivedColors: DerivedColors = {
     backgroundColor: '#ffffff',
@@ -59,7 +59,7 @@ export class ThemeProvider {
   }
 
   private _currentTheme: Themes = 'light';
-  private _themes: Themes[] = ['light', 'dark'];
+  private _themes: Themes[] = ['light', 'dark', 'red'];
 
   private _getNextTheme() {
     const currentThemeIndex = this._themes.findIndex(
@@ -84,11 +84,16 @@ export class ThemeProvider {
       ...this._defaultDerivedColors,
     };
 
-    if (themeType === 'dark') {
-      extendedColors.primary.color = '#ff0000';
-    }
     if (themeType === 'light') {
-      extendedColors.primary.color = '#0000ff';
+      // extendedColors.primary.color = '#0000ff';
+    }
+    if (themeType === 'dark') {
+      extendedColors.textColor = '#ffffff';
+      extendedColors.backgroundColor = '#000000';
+    }
+    if (themeType === 'red') {
+      extendedColors.textColor = '#ffffff';
+      extendedColors.backgroundColor = '#D40000';
     }
     return extendedColors;
   };

@@ -1,13 +1,15 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {Colors} from '../../../util';
-import {ThemeContext} from '../../services/theme-provider.service';
+import {
+  ExtendedThemeColors,
+  ThemeContext,
+} from '../../services/theme-provider.service';
 import {hooks} from '../../utils/hooks';
 import {getColorForBar} from './RPMIndicator.component';
 import {SensorItemComponent} from './SensorsList.component';
 // import SensorsListComponent from './SensorsList.component';
 
-const stylesCreator = (colors: Colors) =>
+const stylesCreator = (colors: ExtendedThemeColors) =>
   StyleSheet.create({
     container: {
       display: 'flex',

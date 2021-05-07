@@ -1,8 +1,17 @@
 import React, {useContext} from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import {Colors, font} from '../../../util';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {font} from '../../../util';
 import {PIDS} from '../../obd/obdInfo';
-import {ThemeContext} from '../../services/theme-provider.service';
+import {
+  ExtendedThemeColors,
+  ThemeContext,
+} from '../../services/theme-provider.service';
 import {hooks} from '../../utils/hooks';
 import DataIndicatorComponent from './DataIndicator.component';
 // import MapViewComponent from './MapView.component';
@@ -14,7 +23,7 @@ import ShiftLightsComponent from './ShiftLights.component';
 import ThrottlePositionIndicatorComponent from './ThrottlePositionIndicator.component';
 import TimeIndicatorComponent from './TimeIndicator.component';
 
-const sharedStylesCreator = (colors: Colors) =>
+const sharedStylesCreator = (colors: ExtendedThemeColors) =>
   StyleSheet.create({
     borderedContainer: {
       borderStyle: 'solid',
@@ -35,7 +44,7 @@ const sharedStylesCreator = (colors: Colors) =>
   });
 
 const seventyPercentWidth = 0.7 * Dimensions.get('screen').width;
-const stylesCreator = (colors: Colors) =>
+const stylesCreator = (colors: ExtendedThemeColors) =>
   StyleSheet.create({
     container: {
       backgroundColor: colors.backgroundColor,
@@ -206,7 +215,11 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         />
       )}
       {/* <Text style={styles.gearDisplay}>N</Text> */}
-      <View style={styles.rpmTextContainer}>
+      <TouchableOpacity
+        style={styles.rpmTextContainer}
+        onPress={() => {
+          theme.changeTheme();
+        }}>
         <Text style={styles.rpmText}>{currentRpm}</Text>
         <Text
           style={styles.rpmTextCaption}
@@ -215,7 +228,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
           }}>
           RPM
         </Text>
-      </View>
+      </TouchableOpacity>
       <SensorsListComponent
         style={styles.sensorsListContainer}
         list={sensorsList}
