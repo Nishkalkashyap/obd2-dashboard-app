@@ -11,11 +11,12 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Button,
 } from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
 import ObdDebuggerComponent from './ObdDebugger.component';
 import {btUtil, colors} from '../../util';
-import {hooks} from '../utils/hooks';
+import SampleDataComponent from './android/SampleData.component';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
 const AndroidRoot = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [refreshing, setRefreshing] = useState(true);
-  // hooks.useSampleData();
+  const [canShowSampleDataModal, setCanShowSampleDataModal] = useState(false);
 
   const [btDevices, setBtDevices] = useState<BluetoothDevice[]>([]);
   const [
@@ -87,6 +88,15 @@ const AndroidRoot = () => {
             device={currentBtDevice}
             dismissModalHandle={() => {
               setCurrentBtDevice(null);
+            }}
+          />
+        )}
+      </Modal>
+      <Modal animationType="slide" visible={canShowSampleDataModal}>
+        {canShowSampleDataModal && (
+          <SampleDataComponent
+            dismissModalHandle={() => {
+              setCanShowSampleDataModal(false);
             }}
           />
         )}
@@ -130,6 +140,12 @@ const AndroidRoot = () => {
             </View>
           </TouchableOpacity>
         )}
+      />
+      <Button
+        title="Run sample data"
+        onPress={() => {
+          setCanShowSampleDataModal(true);
+        }}
       />
     </SafeAreaView>
   );

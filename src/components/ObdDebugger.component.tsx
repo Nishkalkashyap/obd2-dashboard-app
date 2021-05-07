@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {BluetoothDevice} from 'react-native-bluetooth-classic';
-import {colors} from '../../util';
+import {colors, font} from '../../util';
 import {PIDS} from '../obd/obdInfo';
 import {IObdResponse} from '../obd/obdTypes';
 import {OBDQueryService} from '../services/obd-query.service';
 import {hooks} from '../utils/hooks';
 
-const styles = StyleSheet.create({
+export const obdDebuggerStyles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
@@ -17,10 +17,17 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 15,
     backgroundColor: colors.primary.color,
-    fontSize: 18,
     color: colors.light.color,
     fontWeight: 'bold',
     marginBottom: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  navbarText: {
+    fontFamily: font.bold,
+    fontSize: 18,
+    color: colors.light.color,
   },
 });
 
@@ -182,9 +189,10 @@ function ObdDebuggerComponent(props: {
 
   return (
     <SafeAreaView>
-      <View style={styles.navbar}>
-        <Text>{device.name}</Text>
+      <View style={obdDebuggerStyles.navbar}>
+        <Text style={obdDebuggerStyles.navbarText}>{device.name}</Text>
         <Text
+          style={obdDebuggerStyles.navbarText}
           onPress={() => {
             dismissModalHandle();
           }}>
