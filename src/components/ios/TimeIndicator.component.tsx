@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {Colors} from '../../../util';
 import {ThemeContext} from '../../services/theme-provider.service';
+import {hooks} from '../../utils/hooks';
 
 const stylesCreator = (colors: Colors) =>
   StyleSheet.create({
@@ -13,7 +14,8 @@ const stylesCreator = (colors: Colors) =>
 
 function TimeIndicatorComponent(props: {parentStyles?: ViewStyle}) {
   const theme = useContext(ThemeContext);
-  const styles = stylesCreator(theme.colors);
+  const colors = hooks.useColors(theme);
+  const styles = stylesCreator(colors);
 
   const {parentStyles} = props;
 

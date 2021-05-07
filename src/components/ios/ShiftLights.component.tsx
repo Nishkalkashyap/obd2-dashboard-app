@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
 import {Colors} from '../../../util';
 import {ThemeContext} from '../../services/theme-provider.service';
+import {hooks} from '../../utils/hooks';
 
 const stylesCreator = (colors: Colors) =>
   StyleSheet.create({
@@ -27,9 +28,8 @@ function ShiftLightsComponent(props: {
   parentStyles?: ViewStyle;
 }) {
   const theme = useContext(ThemeContext);
-  const styles = stylesCreator(theme.colors);
-
-  const colors = theme.colors;
+  const colors = hooks.useColors(theme);
+  const styles = stylesCreator(colors);
 
   const {maxRpm, currentRpm, parentStyles} = props;
   const list = [

@@ -5,7 +5,7 @@ import {PIDS} from '../../obd/obdInfo';
 import {ThemeContext} from '../../services/theme-provider.service';
 import {hooks} from '../../utils/hooks';
 import DataIndicatorComponent from './DataIndicator.component';
-import MapViewComponent from './MapView.component';
+// import MapViewComponent from './MapView.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent, {
   SensorItemComponent,
@@ -131,8 +131,10 @@ const stylesCreator = (colors: Colors) =>
 
 function MainDisplayScreenComponent(props: {width: string; height: string}) {
   const {width, height} = props;
+
   const theme = useContext(ThemeContext);
-  const styles = stylesCreator(theme.colors);
+  const colors = hooks.useColors(theme);
+  const styles = stylesCreator(colors);
 
   const maxRpm = 6000;
 
@@ -192,7 +194,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         maxRpm={maxRpm}
         currentRpm={currentRpm}
       />
-      <MapViewComponent />
+      {/* <MapViewComponent /> */}
       {data.vss && (
         <SensorItemComponent
           style={styles.vssDisplay}
@@ -206,7 +208,14 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
       {/* <Text style={styles.gearDisplay}>N</Text> */}
       <View style={styles.rpmTextContainer}>
         <Text style={styles.rpmText}>{currentRpm}</Text>
-        <Text style={styles.rpmTextCaption}>RPM</Text>
+        <Text
+          style={styles.rpmTextCaption}
+          // onPress={() => {
+          //   theme.changeTheme();
+          // }}
+        >
+          RPM
+        </Text>
       </View>
       <SensorsListComponent
         style={styles.sensorsListContainer}

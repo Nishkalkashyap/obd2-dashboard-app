@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {Colors} from '../../../util';
 import {ThemeContext} from '../../services/theme-provider.service';
+import {hooks} from '../../utils/hooks';
 import {getColorForBar} from './RPMIndicator.component';
 import {SensorItemComponent} from './SensorsList.component';
 // import SensorsListComponent from './SensorsList.component';
@@ -41,7 +42,8 @@ function ThrottlePositionIndicatorComponent(props: {
   currentThrottle: number;
 }) {
   const theme = useContext(ThemeContext);
-  const styles = stylesCreator(theme.colors);
+  const colors = hooks.useColors(theme);
+  const styles = stylesCreator(colors);
 
   const {thickness, length, parentStyle, currentThrottle} = props;
 
@@ -67,7 +69,7 @@ function ThrottlePositionIndicatorComponent(props: {
               backgroundColor: getColorForBar(
                 index,
                 currentThrottle / 100,
-                theme.colors,
+                colors,
               )[0],
               // shadowColor: getColorForBar(index, currentRpm / maxRpm)[1],
             }}

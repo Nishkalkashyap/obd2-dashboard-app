@@ -3,6 +3,7 @@ import {StyleSheet, View, ViewStyle} from 'react-native';
 import {Svg, Path} from 'react-native-svg';
 import {Colors} from '../../../util';
 import {ThemeContext} from '../../services/theme-provider.service';
+import {hooks} from '../../utils/hooks';
 
 const stylesCreator = (colors: Colors) =>
   StyleSheet.create({
@@ -99,7 +100,8 @@ function RPMIndicatorComponent(props: {
   currentRpm: number;
 }) {
   const theme = useContext(ThemeContext);
-  const styles = stylesCreator(theme.colors);
+  const colors = hooks.useColors(theme);
+  const styles = stylesCreator(colors);
 
   const {width, parentStyle, maxRpm, currentRpm} = props;
   const height = width / 3;
@@ -126,7 +128,7 @@ function RPMIndicatorComponent(props: {
               backgroundColor: getColorForBar(
                 index,
                 currentRpm / maxRpm,
-                theme.colors,
+                colors,
               )[0],
               // shadowColor: getColorForBar(index, currentRpm / maxRpm)[1],
             }}

@@ -1,15 +1,16 @@
 import React from 'react';
 import {Colors, colors as initialColors} from '../../util';
 
+type ThemeHandler = (colors: Colors) => void;
 export class ThemeProvider {
-  private _initialColors: Colors = JSON.parse(JSON.stringify(initialColors));
+  private _deaultColors: Colors = JSON.parse(JSON.stringify(initialColors));
 
-  public get colors() {
-    return this._initialColors;
+  public get defaultColors() {
+    return this._deaultColors;
   }
 
-  private _handlers: Function[] = [];
-  public onDidChangeColors(handler: Function) {
+  private _handlers: ThemeHandler[] = [];
+  public onDidChangeColors(handler: ThemeHandler) {
     this._handlers.push(handler);
     return {
       remove: () => {
@@ -18,10 +19,15 @@ export class ThemeProvider {
     };
   }
 
-  constructor() {
-    setTimeout(() => {
-      this._initialColors.primary.color = '#ff0000';
-    }, 5000);
+  public changeTheme() {
+    console.log('Change theme called');
+    const proxiedColors: Colors = JSON.parse(
+      JSON.stringify(this._deaultColors),
+    );
+    proxiedColors.primary.color = '#ff00ff';
+    this._handlers.forEach(handler => {
+      handler(proxiedColors);
+    });
   }
 }
 

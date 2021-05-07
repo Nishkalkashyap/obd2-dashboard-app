@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {ThemeContext} from '../../services/theme-provider.service';
+import {hooks} from '../../utils/hooks';
 
 const stylesCreator = () =>
   StyleSheet.create({
@@ -15,6 +16,7 @@ function DataIndicatorComponent(props: {data: any; parentStyles: ViewStyle}) {
   const {data, parentStyles} = props;
 
   const theme = useContext(ThemeContext);
+  const colors = hooks.useColors(theme);
   const styles = stylesCreator();
 
   const [blink, setBlink] = useState(false);
@@ -33,7 +35,7 @@ function DataIndicatorComponent(props: {data: any; parentStyles: ViewStyle}) {
     <View
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
-        backgroundColor: blink ? theme.colors.tertiary.tint : '#ffffff22',
+        backgroundColor: blink ? colors.tertiary.tint : '#ffffff22',
         ...styles.container,
         ...parentStyles,
       }}

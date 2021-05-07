@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {StyleSheet, View, ViewStyle, Text} from 'react-native';
 import {Colors, font} from '../../../util';
 import {ThemeContext} from '../../services/theme-provider.service';
+import {hooks} from '../../utils/hooks';
 
 const stylesCreator = (colors: Colors) =>
   StyleSheet.create({
@@ -38,7 +39,8 @@ export const SensorItemComponent = (props: {
   style?: ViewStyle;
 }) => {
   const theme = useContext(ThemeContext);
-  const styles = stylesCreator(theme.colors);
+  const colors = hooks.useColors(theme);
+  const styles = stylesCreator(colors);
 
   const {item, style} = props;
 
@@ -62,7 +64,8 @@ function SensorsListComponent(props: {
   }[];
 }) {
   const theme = useContext(ThemeContext);
-  const styles = stylesCreator(theme.colors);
+  const colors = hooks.useColors(theme);
+  const styles = stylesCreator(colors);
 
   const {list, style} = props;
 

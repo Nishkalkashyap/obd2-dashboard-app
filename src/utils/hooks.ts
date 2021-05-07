@@ -3,6 +3,7 @@ import Zeroconf from 'react-native-zeroconf';
 import {promiseWithTimeout} from '../../util';
 import {PIDS} from '../obd/obdInfo';
 import {IObdResponse} from '../obd/obdTypes';
+import {ThemeProvider} from '../services/theme-provider.service';
 const httpBridge = require('react-native-http-bridge');
 
 const useHostName = () => {
@@ -280,7 +281,23 @@ const useSampleData = () => {
 //   }, [hostname]);
 // };
 
+const useColors = (theme: ThemeProvider) => {
+  const [colors, setColors] = useState(theme.defaultColors);
+
+  useEffect(() => {
+    const listener = theme.onDidChangeColors(color => {
+      setColors(color);
+    });
+    return () => {
+      listener.remove();
+    };
+  }, [theme]);
+
+  return colors;
+};
+
 export const hooks = {
+  useColors,
   useObdFetchRequest,
   useSampleData,
   useHostName,
