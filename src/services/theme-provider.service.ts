@@ -2,6 +2,7 @@ import React from 'react';
 import {colors, Colors, colors as initialColors} from '../../util';
 
 type DerivedColors = {
+  themeType: 'light' | 'dark';
   backgroundColor: string;
   textColor: string;
   shiftLights: {
@@ -23,6 +24,7 @@ type ThemeHandler = (colors: ExtendedThemeColors) => void;
 type Themes = 'light' | 'dark' | 'red';
 export class ThemeProvider {
   private _defaultDerivedColors: DerivedColors = {
+    themeType: 'light',
     backgroundColor: '#ffffff',
     textColor: '#000000',
     shiftLights: {
@@ -87,6 +89,7 @@ export class ThemeProvider {
       // do nothing
     }
     if (themeType === 'dark') {
+      extendedColors.themeType = 'dark';
       extendedColors.textColor = '#ffffff';
       extendedColors.backgroundColor = '#000000';
     }

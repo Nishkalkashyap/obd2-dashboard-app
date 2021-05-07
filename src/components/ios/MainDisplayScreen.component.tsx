@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -14,7 +14,7 @@ import {
 } from '../../services/theme-provider.service';
 import {hooks} from '../../utils/hooks';
 import DataIndicatorComponent from './DataIndicator.component';
-// import MapViewComponent from './MapView.component';
+import MapViewComponent from './MapView.component';
 import RPMIndicatorComponent from './RPMIndicator.component';
 import SensorsListComponent, {
   SensorItemComponent,
@@ -131,6 +131,14 @@ const stylesCreator = (colors: ExtendedThemeColors) =>
       fontFamily: font.bold,
       transform: [{scale: 3}],
     },
+    mapDisplay: {
+      position: 'absolute',
+      top: '37%',
+      left: '10%',
+      width: '44%',
+      height: '44%',
+      borderRadius: 5,
+    },
     throttleDisplay: {
       position: 'absolute',
       bottom: '0%',
@@ -144,6 +152,7 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
   const theme = useContext(ThemeContext);
   const colors = hooks.useColors(theme);
   const styles = stylesCreator(colors);
+  const [canShowMap, setCanShowMap] = useState(false);
 
   const maxRpm = 6000;
 
@@ -181,6 +190,14 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
       units: item?.unit || '',
     }));
 
+  if (canShowMap && data.vss) {
+    sensorsList.push({
+      caption: data.vss.name!,
+      units: data.vss.unit!,
+      value: data.vss.value!,
+    });
+  }
+
   const currentTpsValue = Number.parseFloat(
     Number.parseFloat(data.tps?.value || '0').toPrecision(3),
   );
@@ -203,8 +220,8 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
         maxRpm={maxRpm}
         currentRpm={currentRpm}
       />
-      {/* <MapViewComponent /> */}
-      {data.vss && (
+      {canShowMap && <MapViewComponent styles={styles.mapDisplay} />}
+      {data.vss && !canShowMap && (
         <SensorItemComponent
           style={styles.vssDisplay}
           item={{
@@ -214,7 +231,6 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
           }}
         />
       )}
-      {/* <Text style={styles.gearDisplay}>N</Text> */}
       <TouchableOpacity
         style={styles.rpmTextContainer}
         onPress={() => {
@@ -232,6 +248,11 @@ function MainDisplayScreenComponent(props: {width: string; height: string}) {
       <SensorsListComponent
         style={styles.sensorsListContainer}
         list={sensorsList}
+        onClick={index => {
+          if (index === sensorsList.length - 1) {
+            setCanShowMap(!canShowMap);
+          }
+        }}
       />
       <ThrottlePositionIndicatorComponent
         length={950}

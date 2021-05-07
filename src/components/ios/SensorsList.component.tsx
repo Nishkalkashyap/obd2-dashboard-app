@@ -1,21 +1,30 @@
 import React, {useContext} from 'react';
-import {StyleSheet, View, ViewStyle, Text} from 'react-native';
-import {Colors, font} from '../../../util';
-import {ThemeContext} from '../../services/theme-provider.service';
+import {
+  StyleSheet,
+  View,
+  ViewStyle,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {font} from '../../../util';
+import {
+  ExtendedThemeColors,
+  ThemeContext,
+} from '../../services/theme-provider.service';
 import {hooks} from '../../utils/hooks';
 
-const stylesCreator = (colors: Colors) =>
+const stylesCreator = (colors: ExtendedThemeColors) =>
   StyleSheet.create({
     container: {
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: 'row-reverse',
       flexWrap: 'wrap',
     },
     flatListItem: {
       marginVertical: 10,
       paddingHorizontal: 10,
       paddingVertical: 10,
-      minWidth: '50%',
+      minWidth: '45%',
     },
     flatListText: {
       color: colors.textColor,
@@ -37,6 +46,7 @@ const stylesCreator = (colors: Colors) =>
 export const SensorItemComponent = (props: {
   item: {caption: string; value: string; units: string};
   style?: ViewStyle;
+  onClick?: Function;
 }) => {
   const theme = useContext(ThemeContext);
   const colors = hooks.useColors(theme);
@@ -45,13 +55,20 @@ export const SensorItemComponent = (props: {
   const {item, style} = props;
 
   return (
-    <View style={{...styles.flatListItem, ...style}} key={item.caption}>
+    <TouchableOpacity
+      onPress={() => {
+        if (props.onClick) {
+          props.onClick();
+        }
+      }}
+      style={{...styles.flatListItem, ...style}}
+      key={item.caption}>
       <Text style={styles.flatListText}>{item.value}</Text>
       <Text style={styles.flatListCaption}>
         {item.caption}
         <Text style={styles.flatListUnits}>{`  (${item.units})`}</Text>
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -62,6 +79,7 @@ function SensorsListComponent(props: {
     caption: string;
     units: string;
   }[];
+  onClick?: (index: number) => void;
 }) {
   const theme = useContext(ThemeContext);
   const colors = hooks.useColors(theme);
@@ -71,8 +89,16 @@ function SensorsListComponent(props: {
 
   return (
     <View style={{...styles.container, ...style}}>
-      {list.map(item => (
-        <SensorItemComponent key={item.caption} item={item} />
+      {list.map((item, index) => (
+        <SensorItemComponent
+          key={item.caption}
+          item={item}
+          onClick={() => {
+            if (props.onClick) {
+              props.onClick(index);
+            }
+          }}
+        />
       ))}
     </View>
   );
