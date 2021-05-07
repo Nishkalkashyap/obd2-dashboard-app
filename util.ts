@@ -50,6 +50,7 @@ export const font = {
   wide: 'Formula1-Display-Wide',
 };
 
+export type Colors = typeof colors;
 export const colors = {
   primaryColor: 'dodgerblue',
   secondaryColor: 'team',

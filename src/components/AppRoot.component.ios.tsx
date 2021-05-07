@@ -1,5 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
+import {ThemeContext, ThemeProvider} from '../services/theme-provider.service';
 import MainDisplayScreenComponent from './ios/MainDisplayScreen.component';
 
 const styles = StyleSheet.create({
@@ -15,7 +16,9 @@ const styles = StyleSheet.create({
 function IOSRoot() {
   return (
     <SafeAreaView style={styles.container}>
-      <MainDisplayScreenComponent width={'100%'} height={'100%'} />
+      <ThemeContext.Provider value={new ThemeProvider()}>
+        <MainDisplayScreenComponent width={'100%'} height={'100%'} />
+      </ThemeContext.Provider>
     </SafeAreaView>
   );
 }

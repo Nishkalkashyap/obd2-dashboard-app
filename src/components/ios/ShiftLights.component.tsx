@@ -1,29 +1,36 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
-import {colors} from '../../../util';
+import {Colors} from '../../../util';
+import {ThemeContext} from '../../services/theme-provider.service';
 
-const styles = StyleSheet.create({
-  listContainer: {},
-  light: {
-    borderRadius: 200,
-    width: 30,
-    height: 30,
-    marginHorizontal: 10,
-    shadowColor: colors.light.color,
-    shadowOpacity: 1,
-    shadowRadius: 12,
-    shadowOffset: {
-      height: 0,
-      width: 0,
+const stylesCreator = (colors: Colors) =>
+  StyleSheet.create({
+    listContainer: {},
+    light: {
+      borderRadius: 200,
+      width: 30,
+      height: 30,
+      marginHorizontal: 10,
+      shadowColor: colors.light.color,
+      shadowOpacity: 1,
+      shadowRadius: 12,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
     },
-  },
-});
+  });
 
 function ShiftLightsComponent(props: {
   maxRpm: number;
   currentRpm: number;
   parentStyles?: ViewStyle;
 }) {
+  const theme = useContext(ThemeContext);
+  const styles = stylesCreator(theme.colors);
+
+  const colors = theme.colors;
+
   const {maxRpm, currentRpm, parentStyles} = props;
   const list = [
     [colors.success.color, colors.success.tint],

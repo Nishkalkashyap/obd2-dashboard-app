@@ -1,41 +1,47 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {colors} from '../../../util';
 import {Svg, Path} from 'react-native-svg';
+import {Colors} from '../../../util';
+import {ThemeContext} from '../../services/theme-provider.service';
 
-const styles = StyleSheet.create({
-  container: {
-    // borderWidth: 1,
-    // borderColor: colors.primary.color,
-  },
-  svgImage: {
-    zIndex: 1,
-    position: 'absolute',
-    top: '0%',
-    borderWidth: 1,
-    borderColor: '#000',
-  },
-  barsContainer: {
-    position: 'absolute',
-    top: '0%',
-    zIndex: 0,
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-  },
-  bar: {
-    backgroundColor: colors.primary.color,
-    borderWidth: 1,
-    // shadowOpacity: 1,
-    // shadowOffset: {width: 0, height: 0},
-    // shadowRadius: 3,
-  },
-});
+const stylesCreator = (colors: Colors) =>
+  StyleSheet.create({
+    container: {
+      // borderWidth: 1,
+      // borderColor: colors.primary.color,
+    },
+    svgImage: {
+      zIndex: 1,
+      position: 'absolute',
+      top: '0%',
+      borderWidth: 1,
+      borderColor: '#000',
+    },
+    barsContainer: {
+      position: 'absolute',
+      top: '0%',
+      zIndex: 0,
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+    },
+    bar: {
+      backgroundColor: colors.primary.color,
+      borderWidth: 1,
+      // shadowOpacity: 1,
+      // shadowOffset: {width: 0, height: 0},
+      // shadowRadius: 3,
+    },
+  });
 
 const totalNumberOfBars = 50;
 
-export const getColorForBar = (index: number, rpmRatio: number) => {
+export const getColorForBar = (
+  index: number,
+  rpmRatio: number,
+  colors: Colors,
+) => {
   const barRatio = index / totalNumberOfBars;
 
   if (barRatio > rpmRatio) {
@@ -92,6 +98,9 @@ function RPMIndicatorComponent(props: {
   maxRpm: number;
   currentRpm: number;
 }) {
+  const theme = useContext(ThemeContext);
+  const styles = stylesCreator(theme.colors);
+
   const {width, parentStyle, maxRpm, currentRpm} = props;
   const height = width / 3;
 
@@ -114,7 +123,11 @@ function RPMIndicatorComponent(props: {
               ...styles.bar,
               width: individualBarWidth,
               height: height,
-              backgroundColor: getColorForBar(index, currentRpm / maxRpm)[0],
+              backgroundColor: getColorForBar(
+                index,
+                currentRpm / maxRpm,
+                theme.colors,
+              )[0],
               // shadowColor: getColorForBar(index, currentRpm / maxRpm)[1],
             }}
           />

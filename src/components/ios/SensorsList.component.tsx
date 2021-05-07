@@ -1,40 +1,45 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, ViewStyle, Text} from 'react-native';
-import {colors, font} from '../../../util';
+import {Colors, font} from '../../../util';
+import {ThemeContext} from '../../services/theme-provider.service';
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  flatListItem: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    minWidth: '50%',
-  },
-  flatListText: {
-    color: colors.light.color,
-    fontSize: 90,
-    textAlign: 'center',
-    fontFamily: font.bold,
-  },
-  flatListUnits: {
-    paddingLeft: 10,
-  },
-  flatListCaption: {
-    color: colors.light.color,
-    fontSize: 20,
-    textAlign: 'center',
-    fontFamily: font.bold,
-  },
-});
+const stylesCreator = (colors: Colors) =>
+  StyleSheet.create({
+    container: {
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    flatListItem: {
+      marginVertical: 10,
+      paddingHorizontal: 10,
+      paddingVertical: 10,
+      minWidth: '50%',
+    },
+    flatListText: {
+      color: colors.light.color,
+      fontSize: 90,
+      textAlign: 'center',
+      fontFamily: font.bold,
+    },
+    flatListUnits: {
+      paddingLeft: 10,
+    },
+    flatListCaption: {
+      color: colors.light.color,
+      fontSize: 20,
+      textAlign: 'center',
+      fontFamily: font.bold,
+    },
+  });
 
 export const SensorItemComponent = (props: {
   item: {caption: string; value: string; units: string};
   style?: ViewStyle;
 }) => {
+  const theme = useContext(ThemeContext);
+  const styles = stylesCreator(theme.colors);
+
   const {item, style} = props;
 
   return (
@@ -56,6 +61,9 @@ function SensorsListComponent(props: {
     units: string;
   }[];
 }) {
+  const theme = useContext(ThemeContext);
+  const styles = stylesCreator(theme.colors);
+
   const {list, style} = props;
 
   return (

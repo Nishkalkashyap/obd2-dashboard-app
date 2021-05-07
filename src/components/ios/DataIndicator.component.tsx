@@ -1,17 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {colors} from '../../../util';
+import {ThemeContext} from '../../services/theme-provider.service';
 
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 30,
-    width: 30,
-    height: 30,
-  },
-});
+const stylesCreator = () =>
+  StyleSheet.create({
+    container: {
+      borderRadius: 30,
+      width: 30,
+      height: 30,
+    },
+  });
 
 function DataIndicatorComponent(props: {data: any; parentStyles: ViewStyle}) {
   const {data, parentStyles} = props;
+
+  const theme = useContext(ThemeContext);
+  const styles = stylesCreator();
 
   const [blink, setBlink] = useState(false);
 
@@ -29,7 +33,7 @@ function DataIndicatorComponent(props: {data: any; parentStyles: ViewStyle}) {
     <View
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
-        backgroundColor: blink ? colors.tertiary.tint : '#ffffff22',
+        backgroundColor: blink ? theme.colors.tertiary.tint : '#ffffff22',
         ...styles.container,
         ...parentStyles,
       }}
